@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		08541B9F221FE92300786A1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541B9E221FE92300786A1B /* AppDelegate.swift */; };
-		08541BA1221FE92300786A1B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BA0221FE92300786A1B /* ViewController.swift */; };
+		08541BA1221FE92300786A1B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BA0221FE92300786A1B /* ListViewController.swift */; };
 		08541BA4221FE92300786A1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08541BA2221FE92300786A1B /* Main.storyboard */; };
 		08541BA7221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08541BA5221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld */; };
 		08541BA9221FE92400786A1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08541BA8221FE92400786A1B /* Assets.xcassets */; };
 		08541BAC221FE92400786A1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08541BAA221FE92400786A1B /* LaunchScreen.storyboard */; };
 		08541BB7221FE92400786A1B /* LibraryApp_coredataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BB6221FE92400786A1B /* LibraryApp_coredataTests.swift */; };
 		08541BC2221FE92400786A1B /* LibraryApp_coredataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */; };
+		08541BD3221FEA6E00786A1B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD2221FEA6E00786A1B /* Item.swift */; };
+		08541BD5221FEA8500786A1B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD4221FEA8500786A1B /* DataManager.swift */; };
+		08541BE222201F6A00786A1B /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BE022201F6A00786A1B /* Item+CoreDataClass.swift */; };
+		08541BE5222021AE00786A1B /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BE4222021AE00786A1B /* Item+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +41,7 @@
 /* Begin PBXFileReference section */
 		08541B9B221FE92300786A1B /* LibraryApp_coredata.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryApp_coredata.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08541B9E221FE92300786A1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		08541BA0221FE92300786A1B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		08541BA0221FE92300786A1B /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		08541BA3221FE92300786A1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		08541BA6221FE92300786A1B /* LibraryApp_coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LibraryApp_coredata.xcdatamodel; sourceTree = "<group>"; };
 		08541BA8221FE92400786A1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +53,10 @@
 		08541BBD221FE92400786A1B /* LibraryApp_coredataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibraryApp_coredataUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryApp_coredataUITests.swift; sourceTree = "<group>"; };
 		08541BC3221FE92400786A1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08541BD2221FEA6E00786A1B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		08541BD4221FEA8500786A1B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		08541BE022201F6A00786A1B /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = "<group>"; };
+		08541BE4222021AE00786A1B /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,8 @@
 		08541B92221FE92300786A1B = {
 			isa = PBXGroup;
 			children = (
+				08541BE4222021AE00786A1B /* Item+CoreDataProperties.swift */,
+				08541BE022201F6A00786A1B /* Item+CoreDataClass.swift */,
 				08541B9D221FE92300786A1B /* LibraryApp_coredata */,
 				08541BB5221FE92400786A1B /* LibraryApp_coredataTests */,
 				08541BC0221FE92400786A1B /* LibraryApp_coredataUITests */,
@@ -99,10 +109,12 @@
 		08541B9D221FE92300786A1B /* LibraryApp_coredata */ = {
 			isa = PBXGroup;
 			children = (
+				08541BD7221FEC5A00786A1B /* Supporting files */,
+				08541BD1221FEA4500786A1B /* Model */,
+				08541BD0221FEA3A00786A1B /* View */,
+				08541BCF221FEA1F00786A1B /* Controller */,
 				08541B9E221FE92300786A1B /* AppDelegate.swift */,
-				08541BA0221FE92300786A1B /* ViewController.swift */,
 				08541BA2221FE92300786A1B /* Main.storyboard */,
-				08541BA8221FE92400786A1B /* Assets.xcassets */,
 				08541BAA221FE92400786A1B /* LaunchScreen.storyboard */,
 				08541BAD221FE92400786A1B /* Info.plist */,
 				08541BA5221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld */,
@@ -126,6 +138,38 @@
 				08541BC3221FE92400786A1B /* Info.plist */,
 			);
 			path = LibraryApp_coredataUITests;
+			sourceTree = "<group>";
+		};
+		08541BCF221FEA1F00786A1B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				08541BA0221FE92300786A1B /* ListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		08541BD0221FEA3A00786A1B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		08541BD1221FEA4500786A1B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				08541BD2221FEA6E00786A1B /* Item.swift */,
+				08541BD4221FEA8500786A1B /* DataManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		08541BD7221FEC5A00786A1B /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				08541BA8221FE92400786A1B /* Assets.xcassets */,
+			);
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +303,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08541BA1221FE92300786A1B /* ViewController.swift in Sources */,
+				08541BE5222021AE00786A1B /* Item+CoreDataProperties.swift in Sources */,
+				08541BE222201F6A00786A1B /* Item+CoreDataClass.swift in Sources */,
+				08541BD3221FEA6E00786A1B /* Item.swift in Sources */,
+				08541BD5221FEA8500786A1B /* DataManager.swift in Sources */,
+				08541BA1221FE92300786A1B /* ListViewController.swift in Sources */,
 				08541BA7221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld in Sources */,
 				08541B9F221FE92300786A1B /* AppDelegate.swift in Sources */,
 			);
@@ -437,12 +485,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T4CLTWL9DU;
 				INFOPLIST_FILE = LibraryApp_coredata/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredata";
+				PRODUCT_BUNDLE_IDENTIFIER = eb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -454,12 +503,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T4CLTWL9DU;
 				INFOPLIST_FILE = LibraryApp_coredata/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredata";
+				PRODUCT_BUNDLE_IDENTIFIER = eb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
