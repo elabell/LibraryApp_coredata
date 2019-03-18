@@ -7,16 +7,29 @@
 //
 
 import UIKit
+import CoreData
 
 class ListViewController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationBar!
- 
+   
     
-    var tableItems = [Item]()
+    //TODO modifier Item on ItemCore
+   // var tableItems = [Item]()
+   // var tableItems = [ItemCore]()
     
-    var tableItemsfiltered = [Item]()
+ // var tableItems : [NSManagedObject] = []
+    var tableItems : [ItemCore] = [] //= [ItemCore]()
+    var tableItemsfiltered = [ItemCore]()
+    
     var shouldShowSearchResults = false
+    
+    //let coreDataManager = UIApplication.shared.delegate as! CoreDataManager
+    // let coreDataManager2 : CoreDataManagerDelegate
+   
+    
+    
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     var searchController = UISearchController() //(searchResultsController: nil)
@@ -69,7 +82,7 @@ class ListViewController: UIViewController {
         if (textFildInput != ""){
             txt = textFildInput
         }
-        let item = Item(_text: txt)
+        let item = ItemCore(context: self.getContext())//Item(_text: txt)
        // tableItems =Array<Item>(repeating: Item, count: 9)
         tableItems.append(item)
         tableView.reloadData()
@@ -79,10 +92,12 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        tableItems =  [Item]()
-        tableItemsfiltered = [Item]()
+        tableItems =  [ItemCore]()
+        tableItemsfiltered = [ItemCore]()
+        
         shouldShowSearchResults = false
         initTablewithItems()
+        
         
         configureSearchController()
         
@@ -113,16 +128,23 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     func updateSearchResults(for searchController: UISearchController) {
       
         
-        guard let searchText = searchController.searchBar.text else {
+        guard let searchText = searchController.searchBar.text,
+             searchText.count > 0
+        else {
           //  self.shouldShowSearchResults = false
-            return }
+            tableItemsfiltered = tableItems
+            tableView.reloadData()
+            return
+        }
+        
+    
         print(searchText)
         //ici function de tri
         
         self.tableItemsfiltered.removeAll()
         
         for item: Int in 0..<tableItems.count {
-            if tableItems[item].text.lowercased().contains(
+            if tableItems[item].text!.lowercased().contains(
                 searchText.lowercased()) {
                 self.tableItemsfiltered.append(tableItems[item])
               shouldShowSearchResults = true
@@ -157,8 +179,8 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        self.tableItemsfiltered = tableItems.filter({( item : Item) -> Bool in
-            return item.text.lowercased().contains(searchText.lowercased())
+        self.tableItemsfiltered = tableItems.filter({( item : ItemCore) -> Bool in
+            return item.text!.lowercased().contains(searchText.lowercased())
         })
         
         tableView.reloadData()
@@ -180,11 +202,11 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ListTableViewCell
         //indexPath.row
-        cell.textLabel?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
+        cell.LabelItem.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
         let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] : tableItems[indexPath.row]
-          configureCheckmark(for: cell, withItem: item)
+        configureCheckmark(for: cell, withItem: item)
         
         if !shouldShowSearchResults {
            tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -202,9 +224,11 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         
         if let cell = tableView.cellForRow(at: indexPath){
             let item = tableItems[indexPath.row]
-            item.toggleChecked()
             
-            configureCheckmark(for: cell, withItem: item)
+        
+          //  item.toggleChecked()
+            
+            configureCheckmark(for: cell, withItem: item as! ItemCore)
             // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.none)
             tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
             
@@ -227,7 +251,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
     
     
-    func configureCheckmark(for cell: UITableViewCell, withItem item: Item){
+    func configureCheckmark(for cell: UITableViewCell, withItem item: ItemCore){
         if(item.checked){
             cell.accessoryType = .checkmark
         }
@@ -237,17 +261,77 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
     
     func initTablewithItems(){
-        let task1 = Item(_text: "Finir le cours d'IOS")
-        let task2 = Item(_text: "Mettre à jour XCode",_checked:true)
-        let task3 = Item(_text: "Ma tache perso")
-        let task4 = Item(_text: "Home work Java",_checked:true)
-        tableItems.append(task1)
-        tableItems.append(task2)
-        tableItems.append(task3)
-        tableItems.append(task4)
+        //let task1 = ItemCore(text : "Finir le cours d'IOS")
+       // let task2 = ItemCore(text : "Mettre à jour XCode",_checked:true)
+       // let task3 = ItemCore(text : "Ma tache perso")
+      //  let task4 = ItemCore(text : "Home work Java",_checked:true)
         
+        
+        let context = getContext()
+        let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
+        
+        let newtask1   = NSManagedObject(entity: entity!, insertInto: context )
+        newtask1.setValue("Finir le cours d'IOS", forKey: "text")
+        
+        let newtask2   = NSManagedObject(entity: entity!, insertInto: context )
+        newtask2.setValue("Mettre à jour XCode", forKey: "text")
+        newtask2.setValue(true, forKey: "checked")
+        
+        let newtask3   = NSManagedObject(entity: entity!, insertInto: context )
+        newtask3.setValue("Ma tache perso", forKey: "text")
+        
+        let newtask4   = NSManagedObject(entity: entity!, insertInto: context )
+        newtask4.setValue("Home work Java", forKey: "text")
+        newtask4.setValue(true, forKey: "checked")
+        
+        
+        //TODO insert into Coredata BBD
+        //Recoup of context from CoreDataManager 
+        //let test = ItemCore(context: NSManagedObjectContext())
+        
+        tableItems.append(newtask1 as! ItemCore)
+        tableItems.append(newtask3 as! ItemCore)
+        tableItems.append(newtask3 as! ItemCore)
+        tableItems.append(newtask4 as! ItemCore)
+        
+        saveData ()
         // nbItems = tableItems.count
         
+    }
+    //save the context in the Database
+    func saveData (){
+        do {
+            try getContext().save()
+        } catch{
+            print("Failed saving")
+        }
+
+    }
+    
+    func fetchfromCoreData(){
+    
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemCore")
+        
+        //it's any sql query ?
+        //request.predicate = NSPredicate(format: "text = %@","Home work Java")
+        
+        
+        do {
+          let result =  try  getContext().fetch(request)
+            for data in result as! [NSManagedObject]{
+                print(data.value(forKey: "text" ) as! String)
+            }
+            
+        } catch  {
+            print("Fetch Failed")
+        }
+        
+        
+    }
+    
+    func getContext() -> NSManagedObjectContext {
+        return CoreDataManager.shared.context
     }
     
     

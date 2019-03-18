@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,9 +16,11 @@
 		08541BB7221FE92400786A1B /* LibraryApp_coredataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BB6221FE92400786A1B /* LibraryApp_coredataTests.swift */; };
 		08541BC2221FE92400786A1B /* LibraryApp_coredataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */; };
 		08541BD3221FEA6E00786A1B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD2221FEA6E00786A1B /* Item.swift */; };
-		08541BD5221FEA8500786A1B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD4221FEA8500786A1B /* DataManager.swift */; };
+		08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD4221FEA8500786A1B /* CoreDataManager.swift */; };
 		08541BE222201F6A00786A1B /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BE022201F6A00786A1B /* Item+CoreDataClass.swift */; };
 		08541BE5222021AE00786A1B /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BE4222021AE00786A1B /* Item+CoreDataProperties.swift */; };
+		0873115C223FA26200E27338 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115B223FA26200E27338 /* ListTableViewCell.swift */; };
+		0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115D223FB65200E27338 /* FBaseDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +56,11 @@
 		08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryApp_coredataUITests.swift; sourceTree = "<group>"; };
 		08541BC3221FE92400786A1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08541BD2221FEA6E00786A1B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		08541BD4221FEA8500786A1B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		08541BD4221FEA8500786A1B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		08541BE022201F6A00786A1B /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = "<group>"; };
 		08541BE4222021AE00786A1B /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0873115B223FA26200E27338 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		0873115D223FB65200E27338 /* FBaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBaseDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,9 +113,9 @@
 		08541B9D221FE92300786A1B /* LibraryApp_coredata */ = {
 			isa = PBXGroup;
 			children = (
+				0873115A223FA21B00E27338 /* View */,
 				08541BD7221FEC5A00786A1B /* Supporting files */,
 				08541BD1221FEA4500786A1B /* Model */,
-				08541BD0221FEA3A00786A1B /* View */,
 				08541BCF221FEA1F00786A1B /* Controller */,
 				08541B9E221FE92300786A1B /* AppDelegate.swift */,
 				08541BA2221FE92300786A1B /* Main.storyboard */,
@@ -148,18 +152,12 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		08541BD0221FEA3A00786A1B /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		08541BD1221FEA4500786A1B /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				08541BD2221FEA6E00786A1B /* Item.swift */,
-				08541BD4221FEA8500786A1B /* DataManager.swift */,
+				08541BD4221FEA8500786A1B /* CoreDataManager.swift */,
+				0873115D223FB65200E27338 /* FBaseDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,6 +168,14 @@
 				08541BA8221FE92400786A1B /* Assets.xcassets */,
 			);
 			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		0873115A223FA21B00E27338 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0873115B223FA26200E27338 /* ListTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,19 +246,22 @@
 				TargetAttributes = {
 					08541B9A221FE92300786A1B = {
 						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
 					};
 					08541BB1221FE92400786A1B = {
 						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 08541B9A221FE92300786A1B;
 					};
 					08541BBC221FE92400786A1B = {
 						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 08541B9A221FE92300786A1B;
 					};
 				};
 			};
 			buildConfigurationList = 08541B96221FE92300786A1B /* Build configuration list for PBXProject "LibraryApp_coredata" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -304,9 +313,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				08541BE5222021AE00786A1B /* Item+CoreDataProperties.swift in Sources */,
+				0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */,
+				0873115C223FA26200E27338 /* ListTableViewCell.swift in Sources */,
 				08541BE222201F6A00786A1B /* Item+CoreDataClass.swift in Sources */,
 				08541BD3221FEA6E00786A1B /* Item.swift in Sources */,
-				08541BD5221FEA8500786A1B /* DataManager.swift in Sources */,
+				08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */,
 				08541BA1221FE92300786A1B /* ListViewController.swift in Sources */,
 				08541BA7221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld in Sources */,
 				08541B9F221FE92300786A1B /* AppDelegate.swift in Sources */,
@@ -474,8 +485,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -487,10 +497,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T4CLTWL9DU;
 				INFOPLIST_FILE = LibraryApp_coredata/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -505,10 +512,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T4CLTWL9DU;
 				INFOPLIST_FILE = LibraryApp_coredata/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -523,11 +527,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LibraryApp_coredataTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredataTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -543,11 +543,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LibraryApp_coredataTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredataTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -562,11 +558,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LibraryApp_coredataUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredataUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -581,11 +573,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LibraryApp_coredataUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.lp.iem.LibraryApp-coredataUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

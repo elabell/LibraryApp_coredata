@@ -33,22 +33,30 @@
                                 <rect key="frame" x="0.0" y="108" width="375" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="CellIdentifier" textLabel="meD-Vv-AVc" style="IBUITableViewCellStyleDefault" id="Jsb-ZD-eMo">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="CellIdentifier" id="Jsb-ZD-eMo" customClass="ListTableViewCell" customModule="LibraryApp_coredata" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jsb-ZD-eMo" id="nVt-dj-b9l">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="meD-Vv-AVc">
-                                                    <rect key="frame" x="15" y="0.0" width="321" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Yz-Qs-NOb">
+                                                    <rect key="frame" x="15" y="12" width="313" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7Yz-Qs-NOb" firstAttribute="trailing" secondItem="nVt-dj-b9l" secondAttribute="trailingMargin" id="Y1x-6M-JvA"/>
+                                                <constraint firstItem="7Yz-Qs-NOb" firstAttribute="bottom" secondItem="nVt-dj-b9l" secondAttribute="bottomMargin" id="c2y-LC-3Vg"/>
+                                                <constraint firstItem="7Yz-Qs-NOb" firstAttribute="leading" secondItem="nVt-dj-b9l" secondAttribute="leadingMargin" id="fzw-Q5-hiR"/>
+                                                <constraint firstItem="7Yz-Qs-NOb" firstAttribute="top" secondItem="nVt-dj-b9l" secondAttribute="topMargin" constant="1" id="nHw-8h-FwN"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="LabelItem" destination="7Yz-Qs-NOb" id="gE1-aK-HDc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
