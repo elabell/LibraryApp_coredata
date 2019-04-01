@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class ListViewController: UIViewController {
-       //TODO  change to UITableViewController ??
+      
     @IBOutlet weak var navigationBar: UINavigationBar!
    
     
@@ -82,9 +82,20 @@ class ListViewController: UIViewController {
         if (textFildInput != ""){
             txt = textFildInput
         }
-        let item = ItemCore(context: self.getContext())//Item(_text: txt)
+       
+        // TODO have to initial context and entity in funtion or in global
+       // let context2 : NSManagedObjectContext = getContext()
+        let context = self.getContext()
+        let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
+        
+      //  let item = ItemCore(context: self.getContext())//Item(_text: txt)
        // tableItems =Array<Item>(repeating: Item, count: 9)
-        tableItems.append(item)
+        
+        let newitem   = ItemCore(entity: entity!, insertInto: context )
+        newitem.setValue(txt, forKey: "text")
+
+        
+        tableItems.append(newitem)
         tableView.reloadData()
         
     }
@@ -281,7 +292,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
         
        // let newtask1   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
-        let newtask1   = ItemCore(entity: entity!, insertInto: context ) 
+        let newtask1   = ItemCore(entity: entity!, insertInto: context )
         newtask1.setValue("Finir le cours d'IOS", forKey: "text")
         
         let newtask2   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
