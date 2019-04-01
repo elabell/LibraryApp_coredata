@@ -174,6 +174,25 @@ class CoreDataManager {
            return newitem
         }
         
+        //MARK: -  CoreData
+        func deleteItem( item : ItemCore ) -> Bool{
+            
+            let _text : String = item.text as! String
+            
+            let fetchRequest: NSFetchRequest<ItemCore> = ItemCore.fetchRequest()
+            
+            let predicate = NSPredicate(format: "text == %ld", _text)
+            fetchRequest.predicate = predicate
+                //Predicate.init(format: "profileID==\(withID)")
+            let object = try! getContext().fetch(fetchRequest)
+            getContext().delete(object as! ItemCore) //TODO nt work !! TOTEST
+            
+
+            //TODO encapsulate
+            return true
+        }
+        
+        
     // MARK: - getItems
     func getItems(predicate: NSPredicate? = nil,
                       sortDescriptors: [NSSortDescriptor]? = nil,
