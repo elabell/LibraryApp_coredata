@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Item {
+class Item  {
     var  text: String = ""
     var  checked: Bool = false
     

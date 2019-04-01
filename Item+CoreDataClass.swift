@@ -12,7 +12,7 @@ import CoreData
 
 
 //custom code 
-public class ItemCore: NSManagedObject {
+public class ItemCore2: NSManagedObject {
    
     //new not need it ? bc in m.class?
    /*
@@ -36,23 +36,23 @@ public class ItemCore: NSManagedObject {
         checked = _checked
     }
     */
-    func toggleChecked(){
-   
-        if (self.checked){
-         self.checked = false
-         }
-         else{
-         self.checked = true
-         }
-        
-        checked =  (self.checked ) ?  false : true
-        
-    }
-    
-    override public init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        
-        super.init(entity: entity, insertInto: context)
-    }
+//    func toggleChecked(){
+//   
+//        if (self.checked){
+//         self.checked = false
+//         }
+//         else{
+//         self.checked = true
+//         }
+//        
+//        checked =  (self.checked ) ?  false : true
+//        
+//    }
+//    
+//    override public init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+//        
+//        super.init(entity: entity, insertInto: context)
+//    }
    
 
 }
