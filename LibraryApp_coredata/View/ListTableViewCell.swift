@@ -15,7 +15,7 @@ class ListTableViewCell : UITableViewCell {
     
  @IBOutlet weak var LabelItem: UILabel!
     
-    var item: Item? {
+    var item: ItemCore? {
         
         didSet {
             

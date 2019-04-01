@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class ListViewController: UIViewController {
-
+       //TODO  change to UITableViewController ??
     @IBOutlet weak var navigationBar: UINavigationBar!
    
     
@@ -119,7 +119,7 @@ class ListViewController: UIViewController {
     
 
 }
-
+//=====================================================//
 extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISearchResultsUpdating,UISearchBarDelegate {
     
     
@@ -202,9 +202,18 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ListTableViewCell
         //indexPath.row
-        cell.LabelItem.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
+        
+        //old  TODO to delete ?
+        cell.LabelItem?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
+        
+        //new
+        cell.LabelItem?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].value(forKey: "text") as? String :
+            tableItems[indexPath.row].value(forKey: "text") as? String
+        
+        
         let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] : tableItems[indexPath.row]
         configureCheckmark(for: cell, withItem: item)
         
@@ -228,7 +237,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         
           //  item.toggleChecked()
             
-            configureCheckmark(for: cell, withItem: item as! ItemCore)
+            configureCheckmark(for: cell, withItem: item )
             // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.none)
             tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
             
@@ -266,21 +275,23 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
        // let task3 = ItemCore(text : "Ma tache perso")
       //  let task4 = ItemCore(text : "Home work Java",_checked:true)
         
-        
-        let context = getContext()
+     /*   let appDelegate = UIApplication.shared.delegate as! AppDelegate
+       */
+        let context: NSManagedObjectContext = getContext()
         let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
         
-        let newtask1   = NSManagedObject(entity: entity!, insertInto: context )
+       // let newtask1   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
+        let newtask1   = ItemCore(entity: entity!, insertInto: context ) 
         newtask1.setValue("Finir le cours d'IOS", forKey: "text")
         
-        let newtask2   = NSManagedObject(entity: entity!, insertInto: context )
+        let newtask2   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
         newtask2.setValue("Mettre à jour XCode", forKey: "text")
         newtask2.setValue(true, forKey: "checked")
         
-        let newtask3   = NSManagedObject(entity: entity!, insertInto: context )
+        let newtask3   = NSManagedObject(entity: entity!, insertInto: context )as! ItemCore
         newtask3.setValue("Ma tache perso", forKey: "text")
         
-        let newtask4   = NSManagedObject(entity: entity!, insertInto: context )
+        let newtask4   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
         newtask4.setValue("Home work Java", forKey: "text")
         newtask4.setValue(true, forKey: "checked")
         
@@ -289,10 +300,10 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         //Recoup of context from CoreDataManager 
         //let test = ItemCore(context: NSManagedObjectContext())
         
-        tableItems.append(newtask1 as! ItemCore)
-        tableItems.append(newtask3 as! ItemCore)
-        tableItems.append(newtask3 as! ItemCore)
-        tableItems.append(newtask4 as! ItemCore)
+        tableItems.append(newtask1 )
+        tableItems.append(newtask3 )
+        tableItems.append(newtask3 )
+        tableItems.append(newtask4 )
         
         saveData ()
         // nbItems = tableItems.count

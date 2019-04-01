@@ -13,7 +13,14 @@ import CoreData
 
 //custom code 
 public class ItemCore: NSManagedObject {
-   // var  text: String = ""
+   
+    //new not need it ? bc in m.class?
+   /*
+    @NSManaged var text: String?
+    @NSManaged var checked: Bool
+    @NSManaged var photo: NSData?
+   */
+    // var  text: String = ""
    // var  checked: Bool = false
     
    /*
@@ -40,6 +47,11 @@ public class ItemCore: NSManagedObject {
         
         checked =  (self.checked ) ?  false : true
         
+    }
+    
+    override public init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        
+        super.init(entity: entity, insertInto: context)
     }
    
 
