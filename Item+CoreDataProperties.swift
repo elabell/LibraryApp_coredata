@@ -11,14 +11,16 @@ import Foundation
 import CoreData
 
 
-extension ItemCore {
+extension ItemCore2 {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ItemCore> {
-        return NSFetchRequest<ItemCore>(entityName: "ItemCore")
-    }
+//    @nonobjc public class func fetchRequest() -> NSFetchRequest<ItemCore> {
+//        return NSFetchRequest<ItemCore>(entityName: "ItemCore")
+//    }
+//
+//    @NSManaged public var text: String?
+//    @NSManaged public var checked: Bool
+//    @NSManaged public var photo: NSData?
 
-    @NSManaged public var text: String?
-    @NSManaged public var checked: Bool
-    @NSManaged public var photo: NSData?
-
+    
+   
 }

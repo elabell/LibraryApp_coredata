@@ -74,5 +74,15 @@ class CoreDataManager {
             }
         }
     }
+    
+    // MARK: - Core
+    
+    
+    
+    // MARK: - C
+    
+    
  
 }
+
+
