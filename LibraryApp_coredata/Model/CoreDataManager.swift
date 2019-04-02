@@ -174,23 +174,38 @@ class CoreDataManager {
            return newitem
         }
         
-        //MARK: -  CoreData
+        //MARK: -  CoreData deleteItem
         func deleteItem( item : ItemCore ) -> Bool{
             
-            let _text : String = item.text as! String
+           // let _text : String = item.text as! String
             
-            let fetchRequest: NSFetchRequest<ItemCore> = ItemCore.fetchRequest()
+           // let fetchRequest: NSFetchRequest<ItemCore> = ItemCore.fetchRequest()
             
-            let predicate = NSPredicate(format: "text == %ld", _text)
-            fetchRequest.predicate = predicate
+           // let predicate = NSPredicate(format: "text == %ld", _text)
+           // fetchRequest.predicate = predicate
                 //Predicate.init(format: "profileID==\(withID)")
-            let object = try! getContext().fetch(fetchRequest)
-            getContext().delete(object as! ItemCore) //TODO nt work !! TOTEST
+           //let object = try! getContext().fetch(fetchRequest)
+          
+            getContext().delete(item)
             
 
             //TODO encapsulate
             return true
         }
+        
+      
+        
+     //MARK: -  CoreData compare objects
+        func equalsItems( itemA : ItemCore , itemB: ItemCore ) -> Bool{
+
+           
+           let retA = try! getContext().existingObject(with: itemA.objectID) 
+           let retB = try! getContext().existingObject(with: itemB.objectID)
+            
+            return  itemA.objectID.isEqual(itemB.objectID)
+        }
+        
+        
         
         
     // MARK: - getItems
