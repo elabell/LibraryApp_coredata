@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 
 class ListViewController: UIViewController {
-      
+    
+    
     @IBOutlet weak var navigationBar: UINavigationBar!
    
     
@@ -127,7 +128,8 @@ class ListViewController: UIViewController {
        navigationBar.translatesAutoresizingMaskIntoConstraints = false
         
        navigationBar.heightAnchor.constraint(equalToConstant:  44).isActive = true
-     //  navigationBar.leftAnchor.constraint(equalToConstant:  44)
+     
+        //  navigationBar.leftAnchor.constraint(equalToConstant:  44)
        
         //safe area 
         
@@ -211,22 +213,26 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     
      //MARK: Functions tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      
+       
         if shouldShowSearchResults{
             return tableItemsfiltered.count
         }
         else{
+            print("CountItems:" ,tableItems.count)
             return tableItems.count
+            
         }
     
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ListTableViewCell
         //indexPath.row
         
         //old  TODO to delete ?
-        cell.LabelItem?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
+       // cell.LabelItem?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].text : tableItems[indexPath.row].text
         
         //new
         cell.LabelItem?.text = shouldShowSearchResults ? tableItemsfiltered[indexPath.row].value(forKey: "text") as? String :
@@ -236,45 +242,75 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] : tableItems[indexPath.row]
         configureCheckmark(for: cell, withItem: item)
         
-        if !shouldShowSearchResults {
+      /*  if !shouldShowSearchResults {
            tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
            //  tableItemsfiltered.reloadInputViews()
         }
-        
+        */
         
         
         return cell
     }
     
     
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath){
-            let item = tableItems[indexPath.row]
+         let item = tableItems[indexPath.row]
             
         
           //  item.toggleChecked()
             
             configureCheckmark(for: cell, withItem: item )
             // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.none)
-            tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
+           
+            //tableView.reloadRows  this method is auto in this func
+            // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
             
-        }
-        tableView.deselectRow(at: (indexPath), animated: true)
+      }
+    
+    tableView.deselectRow(at: (indexPath), animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             print("Deleted")
             
             
             if(tableItems.count >= indexPath.row + 1){
-                tableItems.remove(at: indexPath.row)
-            }
-            tableView.reloadData()
+                
+                
+                
+                var _item : ItemCore = tableItems[indexPath.row]
+                
+                var _item2 : ItemCore =   tableItems.remove(at: indexPath.row) //not need to delete car reloadData after SI
+            //    tableView.beginUpdates()
+              
+                tableView.deleteRows(at: [indexPath], with: .automatic) // instead of tableView.reloadData()
+            //    tableView.endUpdates()
+               // tableView.reloadData()
+                
+                CoreDataManager.shared.deleteItem(item: _item)
+               // tableItems.remove(at: indexPath.row) //not need to delete car reloadData after SI
+            
+                
+          
+       }
+           // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
+            
+            //tableView.reloadData()
         }
+       
+        if editingStyle == .insert{
+           print("Insert")
+            
+            
+            
+        }
+        
+        
        
     }
     

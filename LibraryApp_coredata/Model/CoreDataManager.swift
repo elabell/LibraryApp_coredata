@@ -15,7 +15,8 @@ protocol CoreDataManagerDelegate {
 
 class CoreDataManager {
     
-     //add deegate here ?
+    
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     static let shared = CoreDataManager()
     
@@ -90,6 +91,7 @@ class CoreDataManager {
   // MARK: - extension ItemCore
     extension CoreDataManager {
        
+    
         
   
      //MARK: -  CoreData  initTablewithItems
@@ -170,27 +172,38 @@ class CoreDataManager {
         
         newitem.setValue(txt, forKey: "text")
             
-         
+        saveData ()
            return newitem
         }
         
         //MARK: -  CoreData deleteItem
-        func deleteItem( item : ItemCore ) -> Bool{
+        func deleteItem( item : ItemCore ) {
             
-           // let _text : String = item.text as! String
+         
+             let context: NSManagedObjectContext = getContext()
             
-           // let fetchRequest: NSFetchRequest<ItemCore> = ItemCore.fetchRequest()
+             context.delete(item as NSManagedObject)
             
-           // let predicate = NSPredicate(format: "text == %ld", _text)
-           // fetchRequest.predicate = predicate
-                //Predicate.init(format: "profileID==\(withID)")
-           //let object = try! getContext().fetch(fetchRequest)
-          
-            getContext().delete(item)
-            
+            do{
+                try context.save()
+                print("Saved successfully")
+            } catch _ {
+                print("there was issue saving data!")
+            }
 
-            //TODO encapsulate
-            return true
+         // verif if the object exists  //TODO
+       /*
+             
+             initializeFetchedResultsController(moc: getContext())
+             
+            let res =  checkIfCoreDataExists2(item: item) // TODO DW
+            
+              let ret = try! getContext().existingObject(with: item.objectID)
+            if ( res){
+                
+                  getContext().delete(item)
+            }
+       */
         }
         
       
@@ -266,6 +279,65 @@ class CoreDataManager {
             
             
         }
+        
+     
+        
+        //MARK: -  CoreData checkifCoreDataExists2 TODO to test
+        
+        func checkIfCoreDataExists2(item : ItemCore) -> Bool{
+            //predicate // Use NSPredicate to filter articlID in coredata
+            
+            //let fetchRequest = NSFetchRequest<ItemCore>()
+            // Initialize Fetched Results Controller
+     
+            var ret : Bool? = nil
+            
+            let request = NSFetchRequest<ItemCore>()
+          
+            //let context = getContext()
+           // let frc =  NSFetchedResultsController<ItemCore>()
+        
+            let fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: getContext(), sectionNameKeyPath: nil, cacheName: nil)
+            
+        
+            if let myObjects = fetchedResultsController.fetchedObjects as? [ItemCore] {
+                for object in myObjects {
+                    // do some comparison to see if the object is in your downloaded data
+                    if (object.objectID.isEqual(item.objectID)){
+                       ret = true
+                    } else {
+                       ret = false
+                    }
+              }
+            }
+        
+            return ret ?? false
+            
+        }
+    
+        
+        // MARK: -  CoreData finitializeFetchedResultsController  TODO TOtest as DW !!!
+        
+        func initializeFetchedResultsController( moc: NSManagedObjectContext) {
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemCore")
+           // let departmentSort = NSSortDescriptor(key: "department.name", ascending: true)
+           // let lastNameSort = NSSortDescriptor(key: "lastName", ascending: true)
+           // request.sortDescriptors = [departmentSort, lastNameSort]
+            //let _sortDescriptors: [NSSortDescriptor]? = nil
+            // request.sortDescriptors = _sortDescriptors
+            
+            //let moc = getContext()
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+            
+            do {
+                try fetchedResultsController.performFetch()
+            } catch {
+                fatalError("Failed to initialize FetchedResultsController: \(error)")
+            }
+        }
+
+        
         
    // MARK: -  CoreData fetchCoreData_fromContext
         
