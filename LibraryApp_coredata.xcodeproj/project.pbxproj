@@ -116,7 +116,6 @@
 				0873115A223FA21B00E27338 /* View */,
 				08541BD7221FEC5A00786A1B /* Supporting files */,
 				08541BD1221FEA4500786A1B /* Model */,
-				08541BCF221FEA1F00786A1B /* Controller */,
 				08541B9E221FE92300786A1B /* AppDelegate.swift */,
 				08541BA2221FE92300786A1B /* Main.storyboard */,
 				08541BAA221FE92400786A1B /* LaunchScreen.storyboard */,
@@ -158,6 +157,7 @@
 				08541BD2221FEA6E00786A1B /* Item.swift */,
 				08541BD4221FEA8500786A1B /* CoreDataManager.swift */,
 				0873115D223FB65200E27338 /* FBaseDataManager.swift */,
+				08541BCF221FEA1F00786A1B /* Controller */,
 			);
 			path = Model;
 			sourceTree = "<group>";
