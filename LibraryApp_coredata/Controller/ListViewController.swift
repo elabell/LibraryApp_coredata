@@ -256,13 +256,13 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
             
             configureCheckmark(for: cell, withItem: item )
             // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.none)
-            tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.automatic)
+            tableView.reloadRows(at: [indexPath], with:  UITableViewRowAnimation.automatic)
             
         }
         tableView.deselectRow(at: (indexPath), animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             print("Deleted")
