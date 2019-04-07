@@ -85,16 +85,16 @@ class ListViewController: UIViewController {
        
         // TODO have to initial context and entity in funtion or in global
        // let context2 : NSManagedObjectContext = getContext()
-        let context = self.getContext()
-        let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
+        //let context = self.getContext()
+       // let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
         
       //  let item = ItemCore(context: self.getContext())//Item(_text: txt)
        // tableItems =Array<Item>(repeating: Item, count: 9)
         
-        let newitem   = ItemCore(entity: entity!, insertInto: context )
-        newitem.setValue(txt, forKey: "text")
-
-        
+       // let newitem   = ItemCore(entity: entity!, insertInto: context )
+       // newitem.setValue(txt, forKey: "text")
+  
+        let newitem = CoreDataManager.shared.createNewItem(txt: txt, ischecked: true)
         tableItems.append(newitem)
         tableView.reloadData()
         
@@ -112,7 +112,7 @@ class ListViewController: UIViewController {
     
         //    initTablewithItems()  //OK but unchecked during  tests fetchCoreData_fromContext
         
-       tableItems = fetchCoreData_fromContext() // fetch  data from context  to one table Itemcore
+       tableItems = CoreDataManager.shared.fetchCoreData_fromContext() // fetch  data from context  to one table Itemcore
                         // what to do in case of many tables  , is separete context for every table-> NO => we recup entity from chaque table from context , different request depends of entity
         
         
@@ -235,7 +235,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         configureCheckmark(for: cell, withItem: item)
         
         if !shouldShowSearchResults {
-           tableView.reloadRows(at: [indexPath], with: .automatic)
+         // tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
            //  tableItemsfiltered.reloadInputViews()
         }
@@ -256,7 +256,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
             
             configureCheckmark(for: cell, withItem: item )
             // tableView.reloadRows(at: [indexPath], with:  UITableView.RowAnimation.none)
-            tableView.reloadRows(at: [indexPath], with:  UITableViewRowAnimation.automatic)
+   //         tableView.reloadRows(at: [indexPath], with:  UITableViewRowAnimation.automatic)
             
         }
         tableView.deselectRow(at: (indexPath), animated: true)
@@ -269,9 +269,16 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
             
             
             if(tableItems.count >= indexPath.row + 1){
+                
+                let  _item = tableItems[indexPath.row]
+                
+                CoreDataManager.shared.deleteItem(item: _item)
                 tableItems.remove(at: indexPath.row)
+               
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                
             }
-            tableView.reloadData()
+           
         }
        
     }
@@ -288,225 +295,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     
     
 
-    func initTablewithItems(){
-        //let task1 = ItemCore(text : "Finir le cours d'IOS")
-       // let task2 = ItemCore(text : "Mettre à jour XCode",_checked:true)
-       // let task3 = ItemCore(text : "Ma tache perso")
-      //  let task4 = ItemCore(text : "Home work Java",_checked:true)
-        
-     /*   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-       */
-        
-        let item = ItemCore(context: getContext())
-    
-        item.checked = true
-        
-        let context: NSManagedObjectContext = getContext()
-        let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
-        
-       // let newtask1   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
-        let newtask1   = ItemCore(entity: entity!, insertInto: context )
-        newtask1.setValue("Finir le cours d'IOS", forKey: "text")
-        
-        let newtask2   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
-        newtask2.setValue("Mettre à jour XCode", forKey: "text")
-        newtask2.setValue(true, forKey: "checked")
-        
-        let newtask3   = NSManagedObject(entity: entity!, insertInto: context )as! ItemCore
-        newtask3.setValue("Ma tache perso", forKey: "text")
-        
-        let newtask4   = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
-        newtask4.setValue("Home work Java", forKey: "text")
-        newtask4.setValue(true, forKey: "checked")
-        
-        
-        //TODO insert into Coredata BBD
-        //Recoup of context from CoreDataManager 
-        //let test = ItemCore(context: NSManagedObjectContext())
-        
-        tableItems.append(newtask1 )
-        tableItems.append(newtask3 )
-        tableItems.append(newtask3 )
-        tableItems.append(newtask4 )
-        
-        saveData ()
-        // nbItems = tableItems.count
-        
-    }
-    //save the context in the Database
-    func saveData (){
-        do {
-            try getContext().save()
-        } catch{
-            print("Failed saving")
-        }
-        
 
-    }
-    
-    
-
-    func getItems(predicate: NSPredicate? = nil,
-                  sortDescriptors: [NSSortDescriptor]? = nil,
-                  limit: Int = 100) -> [ItemCore] {
-        
-        
-        let fetchRequest = NSFetchRequest<ItemCore>()
-        
-        fetchRequest.predicate = predicate
-        
-        fetchRequest.sortDescriptors = sortDescriptors
-        
-        return try! getContext().fetch(fetchRequest)
-        
-    }
-    
-    func checkifCoreDataExists(text : String) -> Bool{
-        //predicate // Use NSPredicate to filter articlID in coredata
-        
-        //let fetchRequest = NSFetchRequest<ItemCore>()
-        
-        let request = NSFetchRequest<ItemCore>()
-        let predicate = NSPredicate(format: "text == %ld", text)
-        
-        request.predicate = predicate
-        //  let fetchResults = self.getContext().fetch(request) as? [ItemCore]
-        
-        request.fetchLimit = 1
-        
-        do{
-            
-            let context =  self.getContext()
-            let count = try context.count(for: request)
-            if(count == 0){
-                // no matching object
-                print("no present")
-                return false
-                
-            }
-            else{
-                // at least one matching object exists
-                print("one matching item found")
-                return true
-            }
-        }
-        catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-            return false
-        }
-        
-        
-        
-    }
-    
-    func writeData_toTableItems(entityName: String ,tableItems : [ItemCore] ){
-        
-       // entityName = "ItemCore"
-        
-        let context: NSManagedObjectContext = getContext()
-        let entity = NSEntityDescription.entity(forEntityName: entityName , in: context)
-        
-        let newrecord = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as NSManagedObject
-        let timestamp = NSDate()
-        
-        for item in tableItems{
-            
-            newrecord.setValue(item.text, forKey: "text") // EBE  comment recup Key generique ??
-            newrecord.setValue(item.checked, forKey: "checked")
-            newrecord.setValue(item.photo, forKey: "photo")
-            
-            do{
-                try context.save()
-                print("Saved successfully")
-            } catch _ {
-                print("there was issue saving data!")
-            }
-        }
-        
-    }
-    
-    
-    func fetchCoreData_fromContext() -> [ItemCore]{
-    
-        var tableItems : [ItemCore] = []
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemCore")
-        
-        //it's any sql query ?
-        //request.predicate = NSPredicate(format: "text = %@","Home work Java")
-       // let context: NSManagedObjectContext = getContext()
-       // let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
-        
-       // let newrecord = NSEntityDescription.insertNewObject(forEntityName: "ItemCore", into: context) as NSManagedObject
-       // let timestamp = NSDate()
-        
-        
-        do {
-          let result =  try  getContext().fetch(request)  // context contient the same data which  array [ItemCore]
-            for data in result as! [NSManagedObject]{
-            
-                print(data.value(forKey: "text" ) as! String)
-                
-                
-                let  _txt: String = data.value(forKey: "text" ) as! String
-                let  _checked     = data.value(forKey: "checked" ) as? Bool
-                let  _photo           = data.value(forKey: "photo" ) as? NSData
-                
-                tableItems.append(data as! ItemCore)
-                //newrecord.setValue(_txt, forKey: "text") // EBE  comment recup Key generique ??
-                //newrecord.setValue(_checked, forKey: "checked")
-                //newrecord.setValue(_photo, forKey: "photo")
-                
-            }
-            
-        } catch  {
-            print("Fetch Failed")
-        }
-        
-        return tableItems
-    }
-    
-    func fetchfromCoreData2(){
-        
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemCore")
-        
-        //it's any sql query ?
-        //request.predicate = NSPredicate(format: "text = %@","Home work Java")
-        let context: NSManagedObjectContext = getContext()
-        let entity = NSEntityDescription.entity(forEntityName: "ItemCore" , in: context)
-        
-        
-        do {
-            let result =  try  getContext().fetch(request)
-            for data in result as! [NSManagedObject]{
-                
-                print(data.value(forKey: "text" ) as! String)
-                let txt: String = data.value(forKey: "text" ) as! String
-               
-                if(txt != ""){
-                    let newtask  = NSManagedObject(entity: entity!, insertInto: context ) as! ItemCore
-                    newtask.setValue(txt, forKey: "text")
-                    newtask.setValue(true, forKey: "checked")
-                    
-                    tableItems.append(newtask)
-                    saveData () // Not sure if need it here
-                    
-                }
-               
-            }
-            
-        } catch  {
-            print("Fetch Failed")
-        }
-        
-        
-    }
-    
-    func getContext() -> NSManagedObjectContext {
-        return CoreDataManager.shared.context
-    }
     
     
 }
