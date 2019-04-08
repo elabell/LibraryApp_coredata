@@ -8,16 +8,12 @@
 
 import UIKit
 import CoreData
+import Photos
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
       
     @IBOutlet weak var navigationBar: UINavigationBar!
    
-    
-    //TODO modifier Item on ItemCore
-   // var tableItems = [Item]()
-   // var tableItems = [ItemCore]()
-    
  // var tableItems : [NSManagedObject] = []
     var tableItems : [ItemCore] = [] //= [ItemCore]()
     var tableItemsfiltered = [ItemCore]()
@@ -39,34 +35,116 @@ class ListViewController: UIViewController {
     
    
     
-
+    var photoImageView: UIImageView! = nil
+    let imagePickerController = UIImagePickerController()
+   // var alertController: UIAlertController! = nil
     
     //MARK: Actions
     @IBAction func addItems(_ sender: UIBarButtonItem) {
-        
-        let alertController = UIAlertController(title: "Doing", message: "New item?", preferredStyle: .alert)
-        
+      
+        let  alertController = UIAlertController(title: "Doing", message: "New item?", preferredStyle: .alert)
+    
         let okAction = UIAlertAction(title: "Ok", style: .default) {
         (action) in
             
                 
-         let firstTextField = alertController.textFields![0] as UITextField
+            let firstTextField = alertController.textFields![0] as UITextField
             
             self.textFildInput = firstTextField.text ?? "0"
          
             self.loadNewData(textFildInput: firstTextField.text ?? "")
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+      
         
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
+        
+        //picker photo view
+        let margin:CGFloat = 10.0
+        let rect = CGRect(x: margin, y: margin+10.0, width: 50, height: 30)
+        
+        
+       photoImageView = UIImageView(frame: rect)  //UIView(frame: rect)
+       // photoImageView.translatesAutoresizingMaskIntoConstraints = false
+        photoImageView.backgroundColor = .red //UIImage(named: "monitor-1307227_1920")
+        
+
+        
+    /*
+        let frameSizes: [CGFloat] = (150...400).map { CGFloat($0) }
+        let pickerViewValues: [[String]] = [frameSizes.map { Int($0).description }]
+        let pickerViewSelectedValue: UIImagePickerController.Index = (column: 0, row: frameSizes.index(of: 216) ?? 0)
+        
+        alertController.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    vc.preferredContentSize.height = frameSizes[index.row]
+                }
+            }
+        }
+        alertController.addAction("Done")
+        alertController.show(imagePickerController, sender: Any?.self)
+      */
+        
+    //    imagePickerController.isEditing = false
+        
+     
+       
+        
+        
+        let libBtn = UIAlertAction(title: "Select photo" , style:.default){
+            (libSelected) in print("Library Selected")
+           // self.imagePickerController = UIImagePickerController()
+            self.imagePickerController.allowsEditing = true
+            self.imagePickerController.sourceType = .photoLibrary
+            // Make sure ViewController is notified when the user picks an image.
+             self.photoImageView.setNeedsDisplay()
+                self.checkPermission()
+            self.imagePickerController.delegate = self
+            //alertController.show(self.imagePickerController, sender: Any?.self)
+            
+        self.present(self.imagePickerController, animated: true, completion: nil)
+         // self.presentedViewController?.present(self.imagePickerController, animated: true, completion: nil)
+         
+               print("hello")
+             // self.imagePickerController.dismiss(animated: true, completion: nil)
+        }
+        let cameraBtn = UIAlertAction(title: "Take picture" , style:.default){
+            (camSelected) in print("Camera Selected")
+            
+            if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+                self.imagePickerController.allowsEditing = true
+                self.imagePickerController.sourceType = .camera
+                // Make sure ViewController is notified when the user picks an image.
+                self.imagePickerController.delegate = self
+                
+              //  self.present(self.imagePickerController, animated: true, completion: nil)
+               // alertController.dismiss(animated: true, completion: nil)
+              self.present(self.imagePickerController, animated: true, completion: nil)
+               print("hello")
+               }
+        }
+        
+        
+        
+        //================
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+      
         alertController.addTextField(configurationHandler: { (textField) in
             textField.placeholder = "Enter Name of Item "
            
         })
+        alertController.view.addSubview(photoImageView)
         
-        self.present(alertController, animated: true, completion: nil)
+        
+        alertController.addAction(libBtn)
+        alertController.addAction(cameraBtn)
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+       self.present(alertController, animated: true, completion: nil)
+        
       
       //  tableView.reloadData()
         
@@ -75,6 +153,7 @@ class ListViewController: UIViewController {
         tableView.reloadData()
         */
     }
+    
     
     func loadNewData(textFildInput: String){
         
@@ -100,8 +179,106 @@ class ListViewController: UIViewController {
         
     }
     
+    
+    
+    
+      // Mark: Image picker
+/* @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        
+        // Hide the keyboard.
+       // nameTextField.resignFirstResponder()
+        
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+       // let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+
+    imagePickerController.sourceType = .photoLibrary
+        
+        // Make sure ViewController is notified when the user picks an image.
+        imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        self.present(imagePickerController, animated: true, completion: nil)
+    }
+ */
+ 
+  @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         dismiss(animated: true, completion: nil)
+    }
+    
+  
+   @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+      /*  picker.dismiss(animated: true) {
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                let cropController:  ViewController = CropViewController(croppingStyle: .circular, image: pickedImage)
+                cropController.delegate = self
+                self.present(cropController, animated: true, completion: nil)
+            }
+        }
+ */
+       dismiss(animated: true, completion: nil)
+       // if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    //    checkPermission()
+        
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        /* if let finalImage = handleImage(originalImage: self.selectedImage!, maskImage: self.maskImage!) {
+                 photoImageView.contentMode = .topLeft
+                self.photoImageView.image = finalImage
+            }
+ */
+            
+           photoImageView.contentMode = .scaleAspectFit
+           photoImageView.image = selectedImage
+         //   myAlertView show
+            
+            
+         print( selectedImage.debugDescription)
+            
+            //.imageAsset
+        }
+        
+        viewDidLoad()
+            
+            
+                
+            //    [myAlertView show];
+                
+        
+    
+       
+            //self.alertController.view.addSubview(photoImageView)
+     //   alertController.beginAppearanceTransition( true, animated: true)
+       // alertController.viewWillAppear(true)
+        // Dismiss the picker.
+     //   dismiss(animated: true, completion: nil)
+        
+      //  self.imagePickerController.allowsEditing = false
+        // Set photoImageView to display the selected image.
+        //  photoImageView.image = selectedImage
+        
+        
+        
+    }
+    
+    func checkPermission() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized: print("Access is granted by user")
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({ (newStatus) in print("status is \(newStatus)")
+                if newStatus == PHAuthorizationStatus.authorized {  print("success") } })
+        case .restricted: print("User do not have access to photo album.")
+        case .denied: print("User has denied the permission.") } }
+
+    
+    
+    
+  
+    // Mark:
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+      
     
         tableItems =  [ItemCore]()
         tableItemsfiltered = [ItemCore]()
@@ -204,9 +381,15 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
     
     
+    //MARK: section
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
     
-    
-    
+  /*  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return
+    }
+   */
      //MARK: Functions tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if shouldShowSearchResults{
