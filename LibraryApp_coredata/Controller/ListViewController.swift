@@ -28,6 +28,7 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
         print("Deleted Cat")
     }
     
+    var searchedText: String? = nil
     
     @IBOutlet weak var navigation: UINavigationItem!
     
@@ -57,15 +58,8 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
 
     @IBOutlet weak var navigationBar: UINavigationBar!
    
- // var tableItems : [NSManagedObject] = []
     var tableSections : [Category] = []
-   
-    var sectionData: [Int: [ItemCore]] = [:]
-    
-    var sectionDatafiltered: [Int: [ItemCore]] = [:]
-    
     var tableItems : [ItemCore] = [] //= [ItemCore]()
-    var tableItemsfiltered = [ItemCore]()
     var tableImages: [UIImage] = []
     //let img = UIImage(named: "NAME_OF_YOUR_FILE_WITHOUT_EXTENSION")
     
@@ -96,52 +90,44 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
         case .denied: print("User has denied the permission.") } }
 
     
-    
-    
-  
-    // Mark: initItemsInSection
-    
-    func initItemsInSection() {
-        // fetch  data from context  to one table Itemcore
-        // what to do in case of many tables  , is separete context for every table-> NO => we recup entity from chaque table from context , different request depends of entity
+
+    func getItemsInSection(indexSection: Int )-> [ItemCore] {
         
         
-        //init of sections and their rows
-        var counter : Int = 0
-        for section in tableSections {
-            counter = tableSections.index(of: section)!
-            
-            sectionData[counter] = tableItems
-            //  sectionData.updateValue(tableItems, forKey: counter)
-        }
+        var tableItems = [ItemCore]()
+        var tableItemsfiltered = [ItemCore]()
         
-        counter = 0
-        for section in tableSections {
-            counter = tableSections.index(of: section)! //counter + 1
-            
-            sectionDatafiltered[counter] = tableItemsfiltered
-            //  sectionData.updateValue(tableItems, forKey: counter)
-        }
+        var cat = tableSections[indexSection]
+        tableItems = cat.withItem?.allObjects as! [ItemCore]
+    
+        
+        return tableItems
     }
     
-    func updateItemsInSection(index:Int ) {
-        // fetch  data from context  to one table Itemcore
-        // what to do in case of many tables  , is separete context for every table-> NO => we recup entity from chaque table from context , different request depends of entity
-        
-      
-            
-            sectionData[index] = tableItems
-            //  sectionData.updateValue(tableItems, forKey: counter)
-     
-            sectionDatafiltered[index] = tableItemsfiltered
-            //  sectionData.updateValue(tableItems, forKey: counter)
+    func getItemsFiltredInSection(indexSection: Int ,searchText: String )-> [ItemCore] {
     
+        var tableItems = [ItemCore]()
+        var tableItemsfiltered = [ItemCore]()
+        
+        var cat = tableSections[indexSection]
+        tableItems = cat.withItem?.allObjects as! [ItemCore]
+        
+        for item: Int in 0..<tableItems.count {
+            
+            if (tableItems[item].text?.lowercased().contains(
+                searchText.lowercased()))! {
+                tableItemsfiltered.append(tableItems[item])
+                shouldShowSearchResults = true
+            }
+        }
+            
+        return tableItemsfiltered
     }
     
-    func reloadDataView(){
+    func reloadDataView(searchResult: Bool? = false){
         tableSections = CoreDataManager.shared.fetchCoreData_fromContext_Category()
-        tableItems = CoreDataManager.shared.fetchCoreData_fromContext()
-        shouldShowSearchResults = false
+        tableItems = CoreDataManager.shared.fetchCoreData_fromContext() // we don't need this  table in globals  it's just for test
+        shouldShowSearchResults = searchResult!
         tableView.reloadData()
     }
     
@@ -159,8 +145,8 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
         self.navigation.backBarButtonItem = UIBarButtonItem(title: "TODO List", style: UIBarButtonItemStyle.init(rawValue: 1)!, target: nil, action: nil)
         
         
-        tableItems =  [ItemCore]()
-        tableItemsfiltered = [ItemCore]()
+        //tableItems =  [ItemCore]()
+        //tableItemsfiltered = [ItemCore]()
         
         reloadDataView()
        
@@ -177,15 +163,10 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
     //MARK: View SetUp
     func setupConstraints(){
        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
        navigationBar.heightAnchor.constraint(equalToConstant:  44).isActive = true
      //  navigationBar.leftAnchor.constraint(equalToConstant:  44)
-       
-        //safe area 
-        
+        //safe area
     }
-    
-
 }
 
 //=====================================================//
@@ -196,54 +177,21 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
    ////MARK: Functions SearchResults Bar
     func updateSearchResults(for searchController: UISearchController) {
       
-        
+        self.searchedText = searchController.searchBar.text
         guard let searchText = searchController.searchBar.text,
              searchText.count > 0
         else {
-          //  self.shouldShowSearchResults = false
-            tableItemsfiltered = tableItems
-            //sectionDatafiltered = tableSections
-           
-            tableView.reloadData()
+         
+            reloadDataView(searchResult: false)
             return
         }
         
-    
         print(searchText)
         //ici function de tri
         
-        //reinit of tables filtred
-        self.tableItemsfiltered.removeAll()
-       
-        var copyDatafiltered = sectionDatafiltered
+         reloadDataView(searchResult: true)
         
-      /*
-       for section in copyDatafiltered {
-          //  var tabl: [ItemCore] =  sectionDatafiltered[section.key]!
-          sectionDatafiltered.updateValue(self.tableItemsfiltered, forKey: section.key)
-            
-        }
-       */
-        for item: Int in 0..<tableItems.count {
-            if (tableItems[item].text?.lowercased().contains(
-                searchText.lowercased()))! {
-                self.tableItemsfiltered.append(tableItems[item])
-              shouldShowSearchResults = true
-            }
-            
-         /*   for section in copyDatafiltered {
-                //  var tabl: [ItemCore] =  sectionDatafiltered[section.key]!
-                sectionDatafiltered.updateValue(self.tableItemsfiltered, forKey: section.key)
-                
-            }
-        */
- // shouldShowSearchResults = false
-     // shouldShowSearchResults = true
-    
     }
-    tableView.reloadData()
-    }
-    
    
     func configureSearchController() {
         searchController = UISearchController(searchResultsController: nil)
@@ -258,39 +206,13 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         definesPresentationContext = true
     }
     
-    // MARK: - Private instance methods
-    //RW
+    // MARK: - Private instance methods UISearchBarDelegate
     func searchBarIsEmpty() -> Bool {
         // Returns true if the text is empty or nil
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-       //TODO to verify on the level of sections
-      
-      
-      //var copyData = sectionData
-      
-        var copyData = tableSections
-        
-        for section in copyData {
-            var table: [ItemCore] = section.withItem?.allObjects as! [ItemCore]
-            
-                self.tableItemsfiltered = table.filter({( item : ItemCore) -> Bool in return item.text!.lowercased().contains(searchText.lowercased()) })
-                
-            /* self.tableItemsfiltered =     = tableItems.filter({( item : ItemCore) -> Bool in return item.text!.lowercased().contains(searchText.lowercased()) })
-           */
- }
-     
-        /*
-         self.tableItemsfiltered = tableItems.filter({( item : ItemCore) -> Bool in
-            return item.text!.lowercased().contains(searchText.lowercased())
-        })
-        */
-        tableView.reloadData()
-    }
-    
+   
     
     //MARK: section
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -326,13 +248,13 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
    
        //TODO to correct
         if shouldShowSearchResults{
-             print("items filtr count=", tableItemsfiltered.count)
+            
+            var tableItemsfiltered = self.getItemsFiltredInSection(indexSection: section ,searchText: self.searchedText!)
             return tableItemsfiltered.count
             
         }
         else{
             print("section=", section)
-            
             let _countItems  = tableSections[section].withItem?.count
             return _countItems! //tableItems.count
         }
@@ -348,23 +270,15 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     
         print("--> cell: ",cell)
   
-    
-        
-        let item = shouldShowSearchResults ? sectionDatafiltered[indexPath.section]![indexPath.row] as? ItemCore : tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
-        
+        var tableItemsfiltered = [ItemCore]()
+        if(!searchBarIsEmpty()){
+            tableItemsfiltered = self.getItemsFiltredInSection(indexSection: indexPath.section, searchText: self.searchedText!)}
+      
+        let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] as? ItemCore
+            : tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
         
         
         cell.item = item
-        
-        
-         print("-->shouldShowSearchResults : ",shouldShowSearchResults)
-      //   print("-->Text:",cell.LabelItem?.text)
-        // print("-->textCellcountdata: ",sectionData[indexPath.section]!)
-         //print("-->textCell: ",sectionData[indexPath.section]![indexPath.row].value(forKey: "text") )
-      
-        print("!!! test1-->")
-    
-        
         configureCheckmark(for: cell, withItem: item!)
       
         
@@ -377,12 +291,14 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         print("----> ROW Selected indexPath: ", indexPath, " row: ",indexPath.row, " section: ", indexPath.section)
         
         if let cell = tableView.cellForRow(at: indexPath){
-           //let item = tableItems[indexPath.row]
-            //TODO to correct item indexes
-        //  let item = sectionData[indexPath.section]![indexPath.row]
-         let item = tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
+     
+            var tableItemsfiltered = [ItemCore]()
+            if(!searchBarIsEmpty()){
+                tableItemsfiltered = self.getItemsFiltredInSection(indexSection: indexPath.section, searchText: self.searchedText!)}
+     
+            let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] as? ItemCore
+                : tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
           
-            
             configureCheckmark(for: cell, withItem: item! )
             
         }
@@ -395,20 +311,34 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
             print("Deleted")
             
             
-            if(tableItems.count >= indexPath.row + 1){
+           var testcount = tableItems.count
+            print("*===> testcount=", testcount)
+            var items: [ItemCore] = tableSections[indexPath.section].withItem?.allObjects as! [ItemCore]
+            
+            var itemsCount = tableSections[indexPath.section].withItem?.count
+            print("*===> itemsCount =", itemsCount)
+            var itemsCount2 = items.count
+            print("*===> itemsCount2 =", itemsCount2)
+           // if(tableItems.count >= indexPath.row + 1){
   
-              let _item =  tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
-             
-                print("count1 =", tableSections[indexPath.section].withItem?.allObjects.count)
+            
+            
+            if (itemsCount! >= indexPath.row + 1 ){
+            
+                var tableItemsfiltered = [ItemCore]()
+                if(!searchBarIsEmpty()){
+                    tableItemsfiltered = self.getItemsFiltredInSection(indexSection: indexPath.section, searchText: self.searchedText!)}
                 
-                CoreDataManager.shared.deleteItemCore_fromCategory(item: _item!, category: tableSections[indexPath.section])
+                let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] as? ItemCore
+                    : tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
+                
+                // let _item =  tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
+                
+        
+                CoreDataManager.shared.deleteItemCore_fromCategory(item: item!, category: tableSections[indexPath.section])
                
-                tableItems.remove(at: indexPath.row)
+              //TODO test  tableItems.remove(at: indexPath.row)
                 
-               print("count2 =", tableSections[indexPath.section].withItem?.allObjects.count)
-                
-               // tableSections[indexPath.section].withItem?.allObjects.remove(at:indexPath.row)
-                //sectionData[indexPath.section]!.remove(at: indexPath.row)
                
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 tableView.reloadData()

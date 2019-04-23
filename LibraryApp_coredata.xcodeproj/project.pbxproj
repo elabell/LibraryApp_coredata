@@ -19,7 +19,6 @@
 		08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD4221FEA8500786A1B /* CoreDataManager.swift */; };
 		0873115C223FA26200E27338 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115B223FA26200E27338 /* CellView.swift */; };
 		0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115D223FB65200E27338 /* FBaseDataManager.swift */; };
-		243F5BCF226CFA4D00F3EFD5 /* CoreManager_tuto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F5BCE226CFA4D00F3EFD5 /* CoreManager_tuto.swift */; };
 		243F5BD1226CFC1E00F3EFD5 /* ItemDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F5BD0226CFC1E00F3EFD5 /* ItemDataManager.swift */; };
 		245268D7226B6E0300260E85 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268D6226B6E0300260E85 /* ItemDetailViewController.swift */; };
 		245268D9226B77B400260E85 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268D8226B77B400260E85 /* CategoriesViewController.swift */; };
@@ -66,7 +65,6 @@
 		08541BD4221FEA8500786A1B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0873115B223FA26200E27338 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		0873115D223FB65200E27338 /* FBaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBaseDataManager.swift; sourceTree = "<group>"; };
-		243F5BCE226CFA4D00F3EFD5 /* CoreManager_tuto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreManager_tuto.swift; sourceTree = "<group>"; };
 		243F5BD0226CFC1E00F3EFD5 /* ItemDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataManager.swift; sourceTree = "<group>"; };
 		245268D6226B6E0300260E85 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		245268D8226B77B400260E85 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				0873115D223FB65200E27338 /* FBaseDataManager.swift */,
 				24CCEF31226CAA93007A67C2 /* CoreDataManagerNew.swift */,
 				24CCEF33226CB7A3007A67C2 /* CategoryDataManager.swift */,
-				243F5BCE226CFA4D00F3EFD5 /* CoreManager_tuto.swift */,
 				243F5BD0226CFC1E00F3EFD5 /* ItemDataManager.swift */,
 			);
 			path = Model;
@@ -337,7 +334,6 @@
 			files = (
 				0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */,
 				0873115C223FA26200E27338 /* CellView.swift in Sources */,
-				243F5BCF226CFA4D00F3EFD5 /* CoreManager_tuto.swift in Sources */,
 				08541BD3221FEA6E00786A1B /* Item.swift in Sources */,
 				243F5BD1226CFC1E00F3EFD5 /* ItemDataManager.swift in Sources */,
 				08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */,
