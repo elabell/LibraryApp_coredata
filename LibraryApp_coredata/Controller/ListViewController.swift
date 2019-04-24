@@ -51,8 +51,6 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
             break
         
         }
-        
-        
     }
       
 

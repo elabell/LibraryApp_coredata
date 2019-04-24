@@ -40,6 +40,7 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
     var stateAdd: Bool = false
     var editedItemIndex: IndexPath? = nil
     
+    @IBOutlet weak var navigation: UINavigationItem!
     
     @IBOutlet weak var btnAddItem: UIBarButtonItem!
     
@@ -62,6 +63,7 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segueIdentifierForSegue(for: segue) {
+            
         case .ShowItemDetails:
             
             guard let navigationController = segue.destination as?
@@ -79,16 +81,48 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
             itemDetailViewController.stateAdd = false
             self.stateAdd = false
             
-            
+           
             itemDetailViewController.category = category
-            itemDetailViewController.item = self.tableItems[(tableViewItem.indexPathForSelectedRow?.row)!]
-            itemDetailViewController.indexPath = tableViewItem.indexPathForSelectedRow
+            
+            //var indx: IndexPath  = (tableViewItem.indexPathForSelectedRow)!
+            //UIViewController
+           // var indx: IndexPath = tableViewItem.indexPathForSelectedRow! //self.currentSelectedIndex
+                // tableViewItem.indexPath(for: sender as! UITableViewCell)!
+                //    self.tableItems[(tableViewItem.indexPathForSelectedRow?.row)!]
+          //  print("indexPathForSelectedRow ==", indx )
+            if( self.tableViewItem != nil){
+                print("ok")
+                
+                let   indxPath_Current : IndexPath = self.tableViewItem.indexPath(for: sender as! UITableViewCell)!
+                
+                itemDetailViewController.indexPathSelected = indxPath_Current
+                
+                self.editedItemIndex = indxPath_Current
+                
+        
+                
+                if  let viewitem = sender as? CellView?{
+                    print("item== ", viewitem)
+                 itemDetailViewController.itemEdited = viewitem?.item //tableView.indexPath(for: sender)
+                     print("ok2*")
+                    // On passe la donnée via les propriétés
+                }
+                
+                
+           /*     itemDetailViewController.item =  self.tableItems[(self.tableViewItem.indexPathForSelectedRow?.row)!]
+                print("ok1")
+                // itemDetailViewController.item =  self.tableItems[(indx.row)]
+                itemDetailViewController.indexPath = self.tableViewItem.indexPathForSelectedRow
+ 
+             */
+              print("ok2")
+            }
+           print("ok3")
+            break
+         
          //   print ("category = ", category?.name)
          //   print("indexPathForSelectedRow =",tableViewItem.indexPathForSelectedRow)
-              print("indexPathForSelectedRow =")
-            
-            
-            break
+           
             
         case .AddItem:
             guard  let navigationController  = segue.destination as? UINavigationController
@@ -117,7 +151,7 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
             
             itemDetailViewController.delegate = self
             
-            let   indxPath_Current : IndexPath = tableViewItem.indexPath(for: sender as! UITableViewCell)!
+            let   indxPath_Current = tableViewItem.indexPath(for: sender as! UITableViewCell)!
             let   indxPath_Current2 = tableViewItem.indexPathForSelectedRow
             
             itemDetailViewController.stateAdd = false
@@ -125,8 +159,8 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
             itemDetailViewController.stateEdit = true
             self.stateEdit = true
             
-            itemDetailViewController.indexPath = tableViewItem.indexPathForSelectedRow
-            itemDetailViewController.item = self.tableItems[(tableViewItem.indexPathForSelectedRow?.row)!]
+            itemDetailViewController.indexPathSelected = tableViewItem.indexPathForSelectedRow
+            itemDetailViewController.itemEdited = self.tableItems[(tableViewItem.indexPathForSelectedRow?.row)!]
             
             if  let item = sender as? CellView?{
                 
@@ -145,6 +179,8 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
         print("View loaded")
         tableViewItem.dataSource = self
         tableViewItem.delegate = self
+        
+        
        //TODO navigation bar !!
         //navigationBar.
    
@@ -213,7 +249,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     // MARK: - Table view delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableViewItem.deselectRow(at: indexPath, animated: false)
-      //  performSegue(withIdentifier: "ShowItemDetails", sender: self)
+   //    performSegue(withIdentifier: "ShowItemDetails", sender: self)
         
         /* selection mark
         if let cell = tableView.cellForRow(at: indexPath){

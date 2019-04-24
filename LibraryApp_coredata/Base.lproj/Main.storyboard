@@ -213,7 +213,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnDone" destination="hJY-mm-vgU" id="k0P-Py-UJe"/>
                         <outlet property="navigationBar" destination="vYK-aN-MYg" id="jdC-Xy-ZJv"/>
+                        <outlet property="tableViewItemDetails" destination="nIK-ul-ImK" id="wmn-HG-yfE"/>
                         <outlet property="textEdit" destination="9Wm-3a-ltK" id="dPU-XR-wzL"/>
                     </connections>
                 </tableViewController>
@@ -356,8 +358,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="347" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnQ-Nq-ljg">
-                                                    <rect key="frame" x="114" y="1" width="222" height="43"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnQ-Nq-ljg">
+                                                    <rect key="frame" x="109" y="1" width="79.666666666666686" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -370,6 +372,7 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jnQ-Nq-ljg" secondAttribute="trailing" constant="20" symbolic="YES" id="2R1-em-h4e"/>
                                                 <constraint firstItem="jnQ-Nq-ljg" firstAttribute="leading" secondItem="VOf-iT-f2d" secondAttribute="trailing" constant="15" id="7Gx-JJ-Xtd"/>
                                                 <constraint firstItem="jnQ-Nq-ljg" firstAttribute="top" secondItem="CbY-9k-dmB" secondAttribute="topMargin" constant="-10" id="Pq6-0g-QFC"/>
                                                 <constraint firstItem="VOf-iT-f2d" firstAttribute="leading" secondItem="CbY-9k-dmB" secondAttribute="leadingMargin" constant="-13" id="WHx-XJ-9kh"/>
@@ -380,7 +383,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="LabelItem" destination="jnQ-Nq-ljg" id="LBo-PL-WZa"/>
-                                            <segue destination="Aim-D0-F35" kind="presentation" identifier="ShowItemDetails" trigger="accessoryAction" id="S6J-Rz-mhB"/>
+                                            <segue destination="Aim-D0-F35" kind="presentation" identifier="ShowItemDetails" id="yjU-M3-Cpm"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HeaderIdentifier" id="yff-6a-wxp" customClass="HeaderCell" customModule="LibraryApp_coredata" customModuleProvider="target">
@@ -441,6 +444,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="5VI-QY-JPp"/>
                     <connections>
+                        <outlet property="navigation" destination="5VI-QY-JPp" id="g4T-vZ-zd7"/>
                         <outlet property="navigationBar" destination="Taz-yA-O4Y" id="mh8-hV-Ule"/>
                         <outlet property="tableViewItem" destination="5A6-vv-aMM" id="FUi-TS-fR3"/>
                     </connections>
@@ -468,6 +472,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GY7-Of-kf5"/>
+        <segue reference="yjU-M3-Cpm"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,13 +10,15 @@ import UIKit
 
 class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
 //UINavigationControllerDelegate
+    
+    
     var delegate : ItemDetailViewDelegate? = nil
    
     var category: Category? = nil
-    var item: ItemCore? = nil
+    var itemSelected: ItemCore? = nil
     var itemEdited: ItemCore? = nil
     var itemToEditWith: CellView? = nil
-    var indexPath: IndexPath? = nil
+    var indexPathSelected: IndexPath? = nil
     
     
     var stateEdit: Bool = false
@@ -25,7 +27,11 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     var photo: UIImage? = nil
     var date: Date? = nil
     
-    @IBOutlet var tableViewItem: UITableView!
+    @IBOutlet var tableViewItemDetails: UITableView!
+    // @IBOutlet var tableViewItemDetails: UITableView!
+    //@IBOutlet var tableViewItemDetail: UITableView!
+    //  @IBOutlet var tableViewItem: UITableView!
+    //@IBOutlet var tableViewItem: UITableView!
     @IBOutlet weak var textEdit: UITextField!
     
     @IBOutlet weak var navigationBar: UINavigationItem!
@@ -36,23 +42,20 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
         delegate = nil
     }
-    /*  @IBAction func Cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-        delegate = nil
-    }
-*/
+   
     
-   @IBOutlet weak var btnDone: UIBarButtonItem!
+  
+    @IBOutlet weak var btnDone: UIBarButtonItem!
     
     @IBAction func isDone(_ sender: UIBarButtonItem) {
         if (self.stateAdd && !((textEdit.text?.isEmpty)!)){
-            item = CoreDataManager.shared.createNewItem(txt: textEdit.text!, ischecked: false, cat: category!)
+            itemEdited = CoreDataManager.shared.createNewItem(txt: textEdit.text!, ischecked: false, cat: category!)
             
-            delegate?.userAddedItem(self, category: category!, item: item!)
+            delegate?.userAddedItem(self, category: category!, item: itemEdited!)
         }
             
         else if(self.stateEdit){
-            delegate?.userUpdatedItem(self, category: category!, item: item!, rowIndex: indexPath!)
+            delegate?.userUpdatedItem(self, category: category!, item: itemEdited!, rowIndex: indexPathSelected!)
             
         }
         
@@ -61,8 +64,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
    
     
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
-        print("View loaded")
+        print("View loaded Details ")
      
    //     tableViewItem.dataSource = self
    //     tableViewItem.delegate = self
@@ -73,8 +78,41 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
         
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        print("ViewWill ItemDetail appeard")
+        
+        
+        textEdit.becomeFirstResponder()
+        /*
+         if  ((textEdit.text?.isEmpty)!) {
+         btnDone.isEnabled = false
+         }
+         */
+        
+        if(stateAdd){
+            navigationBar.title = "Add item"
+            if  ((textEdit.text?.isEmpty)!) {
+                //  btnDone.isEnabled = false
+            }
+        }else if (stateEdit) {
+            navigationBar.title = "Edit item"
+            if  ((textEdit.text?.isEmpty)!) {
+                btnDone.isEnabled = false
+            }
+        }else {
+            btnDone.isEnabled = false
+            var txt = itemEdited?.text
+            textEdit.insertText(txt!)
+            textEdit.isUserInteractionEnabled = false
+            
+           // textEdit.pasteDelegate?
+            
+            navigationBar.title = "Details of item"
+        }
+
+    }
+  /*
+ override func viewDidAppear(_ animated: Bool) {
         print("View ItemDetail appeard")
         
             
@@ -101,7 +139,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             }
 
     }
-    
+ */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

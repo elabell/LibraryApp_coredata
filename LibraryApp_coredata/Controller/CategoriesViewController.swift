@@ -42,6 +42,7 @@ class CategoriesViewController: UIViewController,SegueHandlerType,ItemsViewDeleg
     @IBOutlet weak var btnShowItems: UIButton!
     
     @IBOutlet weak var navigationBar: UINavigationBar!
+    // @IBOutlet weak var navigationBar: UINavigationBar!
 
     @IBOutlet weak var tableView: UITableView!
      //MARK: addCat
