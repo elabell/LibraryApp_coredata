@@ -171,6 +171,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <toolbar key="tableFooterView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="PtI-1q-ar9">
+                            <rect key="frame" x="0.0" y="97" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                            <items>
+                                <barButtonItem systemItem="edit" id="bAc-ge-z46">
+                                    <connections>
+                                        <action selector="EditItem:" destination="qqs-cj-kP7" id="IfG-w5-pc7"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem width="1" systemItem="camera" id="YYb-7E-tEp">
+                                    <inset key="imageInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="landscapeImageInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="largeContentSizeImageInsets" minX="2" minY="1" maxX="0.0" maxY="0.0"/>
+                                    <connections>
+                                        <action selector="ShowCamera:" destination="qqs-cj-kP7" id="TsT-xn-LRp"/>
+                                    </connections>
+                                </barButtonItem>
+                            </items>
+                        </toolbar>
                         <sections>
                             <tableViewSection id="uQ5-hm-JQR">
                                 <cells>
@@ -213,10 +232,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnCamera" destination="PtI-1q-ar9" id="rMA-XP-aQH"/>
                         <outlet property="btnDone" destination="hJY-mm-vgU" id="k0P-Py-UJe"/>
+                        <outlet property="btnEdit" destination="PtI-1q-ar9" id="vQ1-Se-SAz"/>
                         <outlet property="navigationBar" destination="vYK-aN-MYg" id="jdC-Xy-ZJv"/>
                         <outlet property="tableViewItemDetails" destination="nIK-ul-ImK" id="wmn-HG-yfE"/>
                         <outlet property="textEdit" destination="9Wm-3a-ltK" id="dPU-XR-wzL"/>
+                        <outlet property="toolBar" destination="PtI-1q-ar9" id="vbX-Eh-qdQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JNZ-lQ-OcP" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -28,27 +28,43 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     var date: Date? = nil
     
     @IBOutlet var tableViewItemDetails: UITableView!
-    // @IBOutlet var tableViewItemDetails: UITableView!
-    //@IBOutlet var tableViewItemDetail: UITableView!
-    //  @IBOutlet var tableViewItem: UITableView!
-    //@IBOutlet var tableViewItem: UITableView!
     @IBOutlet weak var textEdit: UITextField!
-    
     @IBOutlet weak var navigationBar: UINavigationItem!
     
     
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var btnEdit: UIToolbar!
+    @IBOutlet weak var btnCamera: UIToolbar!
     
     @IBAction func Cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
         delegate = nil
     }
    
+    @IBAction func EditItem(_ sender: UIBarButtonItem) {
+         self.stateEdit = true
+         self.stateAdd = false
+          
+        navigationBar.title = "Edition of item"
+          textEdit.isUserInteractionEnabled = true
+          btnEdit.isUserInteractionEnabled = false
+        //if  ((textEdit.text?.isEmpty)!) {
+             btnDone.isEnabled = true
+       // }
+        
+        
+    }
+    @IBAction func ShowCamera(_ sender: Any) {
+    }
     
   
     @IBOutlet weak var btnDone: UIBarButtonItem!
     
     @IBAction func isDone(_ sender: UIBarButtonItem) {
+        print("text",textEdit.text)
+        
         if (self.stateAdd && !((textEdit.text?.isEmpty)!)){
+            print("text",textEdit.text)
             itemEdited = CoreDataManager.shared.createNewItem(txt: textEdit.text!, ischecked: false, cat: category!)
             
             delegate?.userAddedItem(self, category: category!, item: itemEdited!)
@@ -98,7 +114,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             navigationBar.title = "Edit item"
             if  ((textEdit.text?.isEmpty)!) {
                 btnDone.isEnabled = false
+            }else{
+                btnDone.isEnabled = true
             }
+            
         }else {
             btnDone.isEnabled = false
             var txt = itemEdited?.text
@@ -111,35 +130,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
 
     }
-  /*
- override func viewDidAppear(_ animated: Bool) {
-        print("View ItemDetail appeard")
-        
-            
-            textEdit.becomeFirstResponder()
-        /*
-          if  ((textEdit.text?.isEmpty)!) {
-                btnDone.isEnabled = false
-            }
-        */
-        
-           if(stateAdd){
-               navigationBar.title = "Add item"
-                if  ((textEdit.text?.isEmpty)!) {
-                  //  btnDone.isEnabled = false
-                }
-            }else if (stateEdit) {
-                navigationBar.title = "Edit item"
-                if  ((textEdit.text?.isEmpty)!) {
-                    btnDone.isEnabled = false
-                }
-            }else {
-                btnDone.isEnabled = false
-                navigationBar.title = "Details of item"
-            }
 
-    }
- */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
