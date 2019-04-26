@@ -36,6 +36,26 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var btnEdit: UIToolbar!
     @IBOutlet weak var btnCamera: UIToolbar!
     
+    
+    
+    @IBOutlet weak var imageEdit: UIImageView!
+    
+    
+    @IBOutlet weak var dateEdit: UITextField!
+     let datePicker = UIDatePicker()
+    
+   /*
+     @IBOutlet var datePicker: UITableView!
+    
+    @IBAction func onPickDate(_ sender: UIDatePicker) {
+    dateEdit.text = "\(sender.date)"
+    }
+    */
+    /*  dateEdit.text = "\(sender.date)"
+ @IBAction func onPickDate(_ sender: Any) {
+        dateEdit.text =  sender
+    }
+ */
     @IBAction func Cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
         delegate = nil
@@ -47,6 +67,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
           
         navigationBar.title = "Edition of item"
           textEdit.isUserInteractionEnabled = true
+          dateEdit.isUserInteractionEnabled = true
           btnEdit.isUserInteractionEnabled = false
         //if  ((textEdit.text?.isEmpty)!) {
              btnDone.isEnabled = true
@@ -71,22 +92,108 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
             
         else if(self.stateEdit){
+            print("edit item = ",textEdit.text)
+            var image : UIImage? = nil
+            
+            image = imageEdit.image
+            
+            if (image != nil) {
+                // let _image : UIImage =  UIImage(data:(image)!)!
+                let dataimage : Data = UIImagePNGRepresentation(image!)!
+                 itemEdited?.photo = dataimage
+                
+            }else {
+                
+                let _image = UIImage(named: "internet")
+                let dataimage : Data = UIImagePNGRepresentation(_image!)!
+                 itemEdited?.photo  = dataimage
+            }
+            var dateReal = dateEdit.text
+            
+            let dateFormatter = DateFormatter()
+            //dateFormatter.dateFormat =
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            dateFormatter.locale = NSLocale.current
+            //dateFormatter.dateStyle = .short
+            //var myDate = myDateString.toDateTime()
+            let date: NSDate? = dateFormatter.date(from: dateReal!) as! NSDate
+           
+            print("Date =" , date)
+            itemEdited?.deadline = date! as Date
+            itemEdited?.text = textEdit.text
+           
+            
+          
+            
+           // CoreDataManager.shared.saveData();
+            
+            var ret : Bool = CoreDataManager.shared.updateItemFromCategory(category: category!, itemEdited: itemEdited!)
+            
             delegate?.userUpdatedItem(self, category: category!, item: itemEdited!, rowIndex: indexPathSelected!)
             
         }
         
     }
 
-   
+    func showDatePicker(){
+        //Formate Date
+        datePicker.datePickerMode = .date
+        if (dateEdit.text != ""){
+            print("dateEdit=", dateEdit.text as Any)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            dateFormatter.locale = NSLocale.current
+            let date: Date? = dateFormatter.date(from: dateEdit.text!)
+            
+            datePicker.date = date!
+            
+        }
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(getdatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        dateEdit.inputAccessoryView = toolbar
+        dateEdit.inputView = datePicker
+        
+    }
+    
+    @objc func getdatePicker(){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = NSLocale.current
+        dateEdit.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancelDatePicker(){
+        self.view.endEditing(true)
+    }
     
     override func viewDidLoad() {
-        
-        
         super.viewDidLoad()
         print("View loaded Details ")
-     
+        showDatePicker()
+        
+    //  let datePicker = UIDatePicker()
+     //   datePicker.datePickerMode = UIDatePickerMode.date
+     //   dateEdit.inputView = datePicker
+        
+       // datePicker.addTarget(self, action: #selector(tableViewItemDetails.
+            //(sender:)), for: UIControlEvents.valueChanged)
+        
+        
    //     tableViewItem.dataSource = self
    //     tableViewItem.delegate = self
+        
+      
+        
         
         if(!stateAdd && !stateEdit){
             print("ViewDEtails loaded")
@@ -94,6 +201,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         print("ViewWill ItemDetail appeard")
         
@@ -123,6 +231,19 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             var txt = itemEdited?.text
             textEdit.insertText(txt!)
             textEdit.isUserInteractionEnabled = false
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = NSLocale.current
+            if (itemEdited?.deadline != nil){
+                let date = formatter.string(from: (itemEdited?.deadline)!)
+               print("datesaved= ", itemEdited?.deadline)
+                print("date output =", date)
+                dateEdit.insertText(date)
+            }
+       
+            
+            
+            dateEdit.isUserInteractionEnabled = false
             
            // textEdit.pasteDelegate?
             

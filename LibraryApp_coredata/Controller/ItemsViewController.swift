@@ -303,12 +303,13 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     
     func editItem(item: ItemCore, indexPath: IndexPath){
         // tableItems.insert(<#T##newElement: ItemCore##ItemCore#>, at: <#T##Int#>)
+       // tableViewItem.beginUpdates()
         tableItems[indexPath.row].checked  = item.checked
         tableItems[indexPath.row].deadline = item.deadline
         tableItems[indexPath.row].photo    = item.photo
         tableItems[indexPath.row].text     = item.text
         tableItems[indexPath.row].withCat  = item.withCat
-        
+       // tableViewItem.endUpdates()
         tableViewItem.reloadData()
     }
     
