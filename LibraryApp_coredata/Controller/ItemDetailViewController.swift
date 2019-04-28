@@ -38,6 +38,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     
     
     
+    @IBOutlet weak var catEdit: UITextField!
     @IBOutlet weak var imageEdit: UIImageView!
     
     
@@ -226,6 +227,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         if(stateAdd){
             navigationBar.title = "Add item"
             btnEdit.isHidden = true
+            var txtcat = category?.name
+            catEdit.insertText(txtcat!)
+            catEdit.isUserInteractionEnabled = false
+            
             if  ((textEdit.text?.isEmpty)!) {
                 //  btnDone.isEnabled = false
             }
@@ -239,10 +244,14 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             
         }else {
             btnDone.isEnabled = false
-              btnEdit.isHidden = false
+            btnEdit.isHidden = false
             var txt = itemEdited?.text
+            var txtcat = category?.name
             textEdit.insertText(txt!)
+            catEdit.insertText(txtcat!)
             textEdit.isUserInteractionEnabled = false
+            catEdit.isUserInteractionEnabled = false
+            
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy"
             formatter.locale = NSLocale.current
