@@ -87,10 +87,21 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         if (self.stateAdd && !((textEdit.text?.isEmpty)!)){
             print("text",textEdit.text)
             itemEdited = CoreDataManager.shared.createNewItem(txt: textEdit.text!, ischecked: false, cat: category!)
+             //----------TODO to refactor------------------------
+            var dateReal = dateEdit.text
+            let dateFormatter = DateFormatter()
+            //dateFormatter.dateFormat =
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            dateFormatter.locale = NSLocale.current
+            //dateFormatter.dateStyle = .short
+            //var myDate = myDateString.toDateTime()
+            let date: NSDate? = dateFormatter.date(from: dateReal!) as! NSDate
+            print("Date =" , date)
+            itemEdited?.deadline = date! as Date
+            //--------------------------------------------------
             
             delegate?.userAddedItem(self, category: category!, item: itemEdited!)
         }
-            
         else if(self.stateEdit){
             print("edit item = ",textEdit.text)
             var image : UIImage? = nil
@@ -108,8 +119,9 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
                 let dataimage : Data = UIImagePNGRepresentation(_image!)!
                  itemEdited?.photo  = dataimage
             }
-            var dateReal = dateEdit.text
             
+             //----------TODO to refactor----------------------
+            var dateReal = dateEdit.text
             let dateFormatter = DateFormatter()
             //dateFormatter.dateFormat =
             dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -121,9 +133,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             print("Date =" , date)
             itemEdited?.deadline = date! as Date
             itemEdited?.text = textEdit.text
-           
-            
-          
+          //--------------------------------------------------
             
            // CoreDataManager.shared.saveData();
             
@@ -215,6 +225,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         if(stateAdd){
             navigationBar.title = "Add item"
+            btnEdit.isHidden = true
             if  ((textEdit.text?.isEmpty)!) {
                 //  btnDone.isEnabled = false
             }
@@ -228,6 +239,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             
         }else {
             btnDone.isEnabled = false
+              btnEdit.isHidden = false
             var txt = itemEdited?.text
             textEdit.insertText(txt!)
             textEdit.isUserInteractionEnabled = false
