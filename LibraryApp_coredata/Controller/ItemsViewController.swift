@@ -29,7 +29,11 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
     }
 
     
-  
+ /*   @IBAction func infoBtnAction(_ sender: UIButton) {
+       performSegue(withIdentifier: "ShowItemDetails", sender: sender)
+        
+    }
+   */
     
     var delegate : ItemsViewDelegate? = nil
      //TODO passer Category  from precedent class/ ecran
@@ -92,29 +96,42 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
           //  print("indexPathForSelectedRow ==", indx )
             if( self.tableViewItem != nil){
                 print("ok")
-                
-                let   indxPath_Current : IndexPath = self.tableViewItem.indexPath(for: sender as! UITableViewCell)!
-                
-                itemDetailViewController.indexPathSelected = indxPath_Current
-                
-                self.editedItemIndex = indxPath_Current
-                
-        
-                
+               
+                // case of CellView as a sender
                 if  let viewitem = sender as? CellView?{
-                    print("item== ", viewitem)
+                 
+                 /*   print("item== ", viewitem)
+                    
+                    let   indxPath_Current : IndexPath = self.tableViewItem.indexPath(for: sender as! UITableViewCell)!
+                    
+                    itemDetailViewController.indexPathSelected = indxPath_Current
+                    
+                    self.editedItemIndex = indxPath_Current
                  itemDetailViewController.itemEdited = viewitem?.item //tableView.indexPath(for: sender)
                      print("ok2*")
+                 */
                     // On passe la donnée via les propriétés
                 }
+                else { //case InfoBtn
+                    
+                    let deburdescr = sender.debugDescription
+                    guard let _sender: UIButton = sender as? UIButton else{
+                        return
+                    }
+                    guard let cellbrut = _sender.superview?.superview else {
+                        return
+                    }
+                    
+                    let cell: CellView = cellbrut as! CellView
+                    let indxPath: IndexPath = tableViewItem.indexPath(for: cell)!
+                    var item = cell.item
+                    itemDetailViewController.itemEdited = item
+                    itemDetailViewController.indexPathSelected = indxPath //indxPath_Current
+                    self.editedItemIndex = indxPath
+                }
+                  
                 
-                
-           /*     itemDetailViewController.item =  self.tableItems[(self.tableViewItem.indexPathForSelectedRow?.row)!]
-                print("ok1")
-                // itemDetailViewController.item =  self.tableItems[(indx.row)]
-                itemDetailViewController.indexPath = self.tableViewItem.indexPathForSelectedRow
- 
-             */
+    
               print("ok2")
             }
            print("ok3")
@@ -260,8 +277,20 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
         }
         tableView.deselectRow(at: (indexPath), animated: true)
         */
-    }
+        if let cell = tableView.cellForRow(at: indexPath){
+            let item = tableItems[indexPath.row] as? ItemCore
+        //=======checkmmarks====
+        if (item?.checked)!{
+            item?.checked = false
+        }else{
+            item?.checked = true
+        }
+            var ret : Bool = CoreDataManager.shared.updateItemFromCategory(category: category!, itemEdited: item!)
+        //=====================
+         configureCheckmark(for: cell, withItem: item! )
+     }
     
+    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -317,6 +346,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     func configureCheckmark(for cell: UITableViewCell, withItem item: ItemCore){
         if(item.checked){
             cell.accessoryType = .checkmark
+            
         }
         else{
             cell.accessoryType = .none

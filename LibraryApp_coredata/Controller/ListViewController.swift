@@ -32,6 +32,39 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
     
     @IBOutlet weak var navigation: UINavigationItem!
     
+   // @IBOutlet weak var checkBtn: UIButton!
+    //@IBOutlet weak var checkBtn: UIButton!
+   
+    /*
+    @IBAction func checkMarkbtn(_ sender: UIButton, forEvent event: UIEvent) {
+       
+       // sender.selectionView
+         var _event = event
+        guard let cellbrut = sender.superview?.superview  else {
+            return
+     
+        }
+        
+        
+        let cell: CellView = cellbrut as! CellView
+        var item = cell.item
+        
+        if (item?.checked)!{
+            item?.checked = false
+        }else{
+            item?.checked = true
+        }
+        var indx :IndexPath =  tableView.indexPath(for: cell)!
+        var catEdited = tableSections[indx.section] as Category
+        
+      //  var ret : Bool = CoreDataManager.shared.updateItemFromCategory(category: catEdited as Category, itemEdited: item)
+        tableView.reloadData()
+        
+    }
+  
+*/
+   
+    
     @IBOutlet weak var btnShowCategory: UIBarButtonItem!
   
     enum SegueIdentifier: String {
@@ -277,14 +310,24 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         
         
         cell.item = item
-         cell.accessoryType = UITableViewCellAccessoryType.checkmark
+     //   cell.accessoryType = UITableViewCellAccessoryType.checkmark
+    //   checkBtn.addTarget(self, action: #selector(checkMarkButtonClicked(sender:)), for: .touchUpInside)
         configureCheckmark(for: cell, withItem: item!)
       
         
         return cell
     }
     
-    
+ /*
+ @objc func checkMarkButtonClicked(sender: UIButton){
+        if sender.isSelected{
+            print("Selected")
+        }else {
+             print("NotSelected")
+        }
+        
+    }
+    */
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         print("----> ROW Selected indexPath: ", indexPath, " row: ",indexPath.row, " section: ", indexPath.section)
@@ -297,7 +340,16 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
      
             let item = shouldShowSearchResults ? tableItemsfiltered[indexPath.row] as? ItemCore
                 : tableSections[indexPath.section].withItem?.allObjects[indexPath.row] as? ItemCore
-          
+       
+            //=======checkmmarks====
+            if (item?.checked)!{
+                item?.checked = false
+            }else{
+                item?.checked = true
+            }
+            let catEdited = tableSections[indexPath.section] as Category
+            var ret : Bool = CoreDataManager.shared.updateItemFromCategory(category: catEdited as Category, itemEdited: item!)
+            //=====================
             configureCheckmark(for: cell, withItem: item! )
             
         }
@@ -358,10 +410,11 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     
     func configureCheckmark(for cell: UITableViewCell, withItem item: ItemCore){
         if(item.checked){
-            cell.accessoryType = .checkmark
+         
+           cell.accessoryType = .checkmark
         }
         else{
-            cell.accessoryType = .none
+           cell.accessoryType = .none
         }
     }
     

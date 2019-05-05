@@ -39,7 +39,21 @@ class CategoriesViewController: UIViewController,SegueHandlerType,ItemsViewDeleg
   //let manager = CategoryDataManager()
     
     
-    @IBOutlet weak var btnShowItems: UIButton!
+    @IBAction func btnShowItems(_ sender: UIButton) {
+        
+            guard let cellbrut = sender.superview?.superview else {
+                return
+            }
+            let cell: HeaderCell = cellbrut as! HeaderCell
+            let indxPath: IndexPath = tableView.indexPath(for: cell)!
+
+        performSegue(withIdentifier: "SelectItems", sender: sender) // change sender for current sender 
+    }
+    /*
+    @IBAction func btnShowItems(_ sender: Any) {
+         performSegue(withIdentifier: "SelectItems", sender: self)
+    }
+    */
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     // @IBOutlet weak var navigationBar: UINavigationBar!
@@ -139,13 +153,30 @@ class CategoriesViewController: UIViewController,SegueHandlerType,ItemsViewDeleg
             itemsViewController.delegate = self
             //itemsViewController.category = self.tableSections[self.currentSelectedIndex]
            
-            itemsViewController.category = self.tableSections[(tableView.indexPathForSelectedRow?.row)!]
-            print ("category = ", self.tableSections[self.currentSelectedIndex])
-           print("indexPathForSelectedRow =", tableView.indexPathForSelectedRow)
+            if (tableView.indexPathForSelectedRow != nil){
+             itemsViewController.category = self.tableSections[(tableView.indexPathForSelectedRow?.row)!]
+              }else {
+              
+                let deburdescr = sender.debugDescription
+                guard let _sender: UIButton = sender as? UIButton else{
+                    return
+                }
+                guard let cellbrut = _sender.superview?.superview else {
+                     return
+                }
+                
+                let cell: HeaderCell = cellbrut as! HeaderCell
+                let indxPath: IndexPath = tableView.indexPath(for: cell)!
+                var item = cell.item
+                itemsViewController.category = self.tableSections[(indxPath.row)]
+                
+            }
+        
             
             break
         }
     }
+    
     
     
     
