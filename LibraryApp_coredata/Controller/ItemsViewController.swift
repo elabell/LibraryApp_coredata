@@ -216,6 +216,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
         cellSection.item = category
         //   (image: tableSections[section].image, labe!lText: tableSections[section].name)
         
+    
         return cellSection
         
     }
@@ -225,7 +226,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     
      
         cell.item = tableItems[indexPath.row]
-        
+        cell.accessoryType = UITableViewCellAccessoryType.detailDisclosureButton
         configureCheckmark(for: cell, withItem: tableItems[indexPath.row])
         // Configure the cell...
         return cell

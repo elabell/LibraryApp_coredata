@@ -277,6 +277,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         
         
         cell.item = item
+         cell.accessoryType = UITableViewCellAccessoryType.checkmark
         configureCheckmark(for: cell, withItem: item!)
       
         
