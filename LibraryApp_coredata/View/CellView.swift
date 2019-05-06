@@ -13,10 +13,12 @@ import CoreData
 
 class CellView : UITableViewCell {
     
+    @IBOutlet weak var DateItem: UILabel!
     @IBOutlet weak var LabelItem: UILabel!
-    @IBOutlet weak var ImageItem: UIImageView!
+   // @IBOutlet weak var ImageItem: UIImageView!
   
-
+    @IBOutlet weak var ImageItem: UIImageView!
+    
     
     
     var item: ItemCore? {
@@ -24,8 +26,13 @@ class CellView : UITableViewCell {
         
         didSet {
             
-            
-         
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = NSLocale.current
+            if (item?.deadline != nil){
+                let date = formatter.string(from: (item?.deadline)!)
+            DateItem?.text = date
+            }
             LabelItem.text = item?.text
            // let data : Data = UIImagePNGRepresentation(item?.photo)
             // data : Data = UIImagePNGRepresentation(item.photo)

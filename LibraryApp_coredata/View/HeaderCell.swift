@@ -12,7 +12,7 @@ import CoreData
 class HeaderCell:  UITableViewCell {
 
     @IBOutlet weak var HeaderImage: UIImageView!
-    @IBOutlet weak var HeaderLabel: UILabel!
+   @IBOutlet weak var HeaderLabel: UILabel!
     
     func setupCellSec(image: UIImage , labelText: String){
         
@@ -53,6 +53,7 @@ class HeaderCell:  UITableViewCell {
             // let data : Data = UIImagePNGRepresentation(item?.photo)
             // data : Data = UIImagePNGRepresentation(item.photo)
             if (item?.image != nil) {
+              
                 let _image : UIImage =  UIImage(data:(item?.image)!)! //UIImage(data:(item?.photo)!,scale:1.0)!
                 HeaderImage.image = _image
                 

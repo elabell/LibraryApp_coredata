@@ -46,9 +46,9 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
     
     @IBOutlet weak var navigation: UINavigationItem!
     
-    @IBOutlet weak var btnAddItem: UIBarButtonItem!
+   // @IBOutlet weak var btnAddItem: UIBarButtonItem!
     
-    @IBOutlet weak var btnItemDetails: UIButton!
+   // @IBOutlet weak var btnItemDetails: UIButton!
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     
@@ -198,14 +198,12 @@ class ItemsViewController: UIViewController,SegueHandlerType,ItemDetailViewDeleg
         tableViewItem.delegate = self
         
         
-       //TODO navigation bar !!
-        //navigationBar.
-   
         tableItems = CoreDataManager.shared.fetchCoreData_fromContext(category: category!)
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
+      
         print("View appeard")
     }
     

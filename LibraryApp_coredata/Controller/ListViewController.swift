@@ -269,7 +269,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 28
+        return 52
     }
 
     
