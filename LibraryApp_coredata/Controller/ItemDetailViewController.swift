@@ -111,13 +111,13 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             
             if (image != nil) {
                 // let _image : UIImage =  UIImage(data:(image)!)!
-                let dataimage : Data = UIImagePNGRepresentation(image!)!
+                let dataimage : Data = image!.pngData()!
                  itemEdited?.photo = dataimage
                 
             }else {
                 
                 let _image = UIImage(named: "internet")
-                let dataimage : Data = UIImagePNGRepresentation(_image!)!
+                let dataimage : Data = _image!.pngData()!
                  itemEdited?.photo  = dataimage
             }
             
@@ -164,7 +164,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(getdatePicker));
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
         
         toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
@@ -321,7 +321,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
   /*
         if editingStyle == .delete {
             print("Deleted")

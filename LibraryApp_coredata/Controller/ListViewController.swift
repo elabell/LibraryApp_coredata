@@ -173,7 +173,7 @@ class ListViewController: UIViewController, UINavigationControllerDelegate ,Segu
         tableView.delegate = self
        
         //TODO refresh view after back action  ->updateView()
-        self.navigation.backBarButtonItem = UIBarButtonItem(title: "TODO List", style: UIBarButtonItemStyle.init(rawValue: 1)!, target: nil, action: nil)
+        self.navigation.backBarButtonItem = UIBarButtonItem(title: "TODO List", style: UIBarButtonItem.Style.init(rawValue: 1)!, target: nil, action: nil)
         
         
         //tableItems =  [ItemCore]()
@@ -356,7 +356,7 @@ extension ListViewController: UITableViewDelegate , UITableViewDataSource,UISear
         tableView.deselectRow(at: (indexPath), animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, commit editingStyle:UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             print("Deleted")

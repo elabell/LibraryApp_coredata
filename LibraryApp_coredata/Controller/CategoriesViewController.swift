@@ -116,7 +116,7 @@ class CategoriesViewController: UIViewController,SegueHandlerType,ItemsViewDeleg
             
             tableView.beginUpdates()
             let indx = IndexPath(row: (tableSections.count - 1), section: 0)
-            tableView.insertRows(at: [indx], with: UITableViewRowAnimation.middle)
+            tableView.insertRows(at: [indx], with: UITableView.RowAnimation.middle)
             tableView.endUpdates()
             
           //  tableView.reloadData() //update
@@ -185,7 +185,7 @@ class CategoriesViewController: UIViewController,SegueHandlerType,ItemsViewDeleg
         print("View loaded")
         tableView.dataSource = self
         tableView.delegate = self
-        self.navigation.backBarButtonItem = UIBarButtonItem(title: "Categories", style: UIBarButtonItemStyle.bordered, target: nil, action: nil)
+        self.navigation.backBarButtonItem = UIBarButtonItem(title: "Categories", style: UIBarButtonItem.Style.bordered, target: nil, action: nil)
         
         tableSections = CoreDataManager.shared.fetchCoreData_fromContext_Category()
         tableItems = CoreDataManager.shared.fetchCoreData_fromContext()
@@ -249,7 +249,7 @@ extension CategoriesViewController : UITableViewDelegate , UITableViewDataSource
     
   
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             print("Deleted")

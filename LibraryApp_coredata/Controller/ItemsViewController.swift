@@ -241,7 +241,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     
      
         cell.item = tableItems[indexPath.row]
-        cell.accessoryType = UITableViewCellAccessoryType.detailDisclosureButton
+        cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
         configureCheckmark(for: cell, withItem: tableItems[indexPath.row])
         // Configure the cell...
         return cell
@@ -290,7 +290,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
     
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             print("Deleted")
@@ -322,7 +322,7 @@ extension ItemsViewController: UITableViewDelegate , UITableViewDataSource {
         
         tableViewItem.beginUpdates()
         let indx = IndexPath(row: (tableItems.count - 1), section: 0) //TODO section: 1 ??
-        tableViewItem.insertRows(at: [indx], with: UITableViewRowAnimation.middle)
+        tableViewItem.insertRows(at: [indx], with: UITableView.RowAnimation.middle)
         tableViewItem.endUpdates()
         
         tableViewItem.reloadData()
