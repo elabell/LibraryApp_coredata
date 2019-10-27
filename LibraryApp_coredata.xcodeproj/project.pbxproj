@@ -16,14 +16,14 @@
 		08541BB7221FE92400786A1B /* LibraryApp_coredataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BB6221FE92400786A1B /* LibraryApp_coredataTests.swift */; };
 		08541BC2221FE92400786A1B /* LibraryApp_coredataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */; };
 		08541BD3221FEA6E00786A1B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD2221FEA6E00786A1B /* Item.swift */; };
-		08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08541BD4221FEA8500786A1B /* CoreDataManager.swift */; };
 		0873115C223FA26200E27338 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115B223FA26200E27338 /* CellView.swift */; };
-		0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873115D223FB65200E27338 /* FBaseDataManager.swift */; };
 		245268D7226B6E0300260E85 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268D6226B6E0300260E85 /* ItemDetailViewController.swift */; };
 		245268D9226B77B400260E85 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268D8226B77B400260E85 /* CategoriesViewController.swift */; };
 		245268DB226B7E9D00260E85 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268DA226B7E9D00260E85 /* ItemsViewController.swift */; };
 		245268DE226BB27500260E85 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245268DD226BB27500260E85 /* SegueHandlerType.swift */; };
 		245CFD5E225D7D1500053549 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CFD5D225D7D1500053549 /* HeaderCell.swift */; };
+		246D44AD2365D91A00FB9705 /* FBaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246D44AC2365D91900FB9705 /* FBaseDataManager.swift */; };
+		246D44AF2365D91C00FB9705 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246D44AE2365D91C00FB9705 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,15 +59,15 @@
 		08541BC1221FE92400786A1B /* LibraryApp_coredataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryApp_coredataUITests.swift; sourceTree = "<group>"; };
 		08541BC3221FE92400786A1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08541BD2221FEA6E00786A1B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		08541BD4221FEA8500786A1B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0873115B223FA26200E27338 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
-		0873115D223FB65200E27338 /* FBaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBaseDataManager.swift; sourceTree = "<group>"; };
 		245268D6226B6E0300260E85 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		245268D8226B77B400260E85 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		245268DA226B7E9D00260E85 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		245268DC226B803D00260E85 /* LibraryApp_coredata.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = LibraryApp_coredata.app; sourceTree = "<group>"; };
 		245268DD226BB27500260E85 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		245CFD5D225D7D1500053549 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		246D44AC2365D91900FB9705 /* FBaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBaseDataManager.swift; sourceTree = "<group>"; };
+		246D44AE2365D91C00FB9705 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,8 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				08541BD2221FEA6E00786A1B /* Item.swift */,
-				08541BD4221FEA8500786A1B /* CoreDataManager.swift */,
-				0873115D223FB65200E27338 /* FBaseDataManager.swift */,
+				246D44AE2365D91C00FB9705 /* CoreDataManager.swift */,
+				246D44AC2365D91900FB9705 /* FBaseDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -323,13 +323,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0873115E223FB65200E27338 /* FBaseDataManager.swift in Sources */,
 				0873115C223FA26200E27338 /* CellView.swift in Sources */,
 				08541BD3221FEA6E00786A1B /* Item.swift in Sources */,
-				08541BD5221FEA8500786A1B /* CoreDataManager.swift in Sources */,
 				245268D9226B77B400260E85 /* CategoriesViewController.swift in Sources */,
 				245CFD5E225D7D1500053549 /* HeaderCell.swift in Sources */,
 				245268DB226B7E9D00260E85 /* ItemsViewController.swift in Sources */,
+				246D44AD2365D91A00FB9705 /* FBaseDataManager.swift in Sources */,
+				246D44AF2365D91C00FB9705 /* CoreDataManager.swift in Sources */,
 				245268D7226B6E0300260E85 /* ItemDetailViewController.swift in Sources */,
 				08541BA1221FE92300786A1B /* ListViewController.swift in Sources */,
 				08541BA7221FE92300786A1B /* LibraryApp_coredata.xcdatamodeld in Sources */,
